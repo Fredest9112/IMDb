@@ -7,4 +7,8 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="imdb_yellow">#F6C700</color>
+    <color name="imdb_gray">#9D9C9C</color>
+    <color name="imdb_black">#4B4747</color>
+    <color name="imdb_white">#F5F5F5</color>
 </resources>
