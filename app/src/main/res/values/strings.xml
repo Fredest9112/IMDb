@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">IMDb</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <!--Login Fragment-->
     <string name="imbd_title">IMDb</string>
     <string name="user_imdb">Username</string>
@@ -15,4 +16,14 @@
     <string name="contentdesc_google_icon">Login with google account</string>
     <string name="question_registration_option">Don\'t you have an account? <b><font color="@color/black"><i>Sign in!</i></font></b></string>
     <string name="guest_option">Continue as guest</string>
+
+    <!--Registration Fragment-->
+    <string name="back_arrow">Back arrow</string>
+    <string name="contentdesc_imdb_logo">IMDB logo</string>
+    <string name="create_account_label">Create an account</string>
+    <string name="username_input">Username</string>
+    <string name="email_input">Email</string>
+    <string name="password_input">Password</string>
+    <string name="password_suggestion">Password should have at least 8 characters</string>
+    <string name="accept_registration_buttone">Accept</string>
 </resources>
