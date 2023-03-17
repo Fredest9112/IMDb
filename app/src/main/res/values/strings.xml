@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">IMDb</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Login Fragment-->
     <string name="imbd_title">IMDb</string>
+    <string name="user_imdb">Username</string>
+    <string name="password_imdb">Password</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="login_button">Login</string>
+    <string name="login_options_button">You can also sign in with</string>
+    <string name="contentdesc_apple_icon">Login with apple account</string>
+    <string name="contentdesc_facebook_icon">Login with facebook account</string>
+    <string name="contentdesc_google_icon">Login with google account</string>
+    <string name="question_registration_option">Don\'t you have an account? <b><font color="@color/black"><i>Sign in!</i></font></b></string>
+    <string name="guest_option">Continue as guest</string>
 </resources>
