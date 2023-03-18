@@ -26,4 +26,10 @@
     <string name="password_input">Password</string>
     <string name="password_suggestion">Password should have at least 8 characters</string>
     <string name="accept_registration_buttone">Accept</string>
+
+    <!--Home Fragment-->
+    <string name="home_icon_bnv">Home</string>
+    <string name="search_icon_bnv">Search</string>
+    <string name="play_icon_bnv">Play</string>
+    <string name="profile_icon_bnv">Profile</string>
 </resources>
