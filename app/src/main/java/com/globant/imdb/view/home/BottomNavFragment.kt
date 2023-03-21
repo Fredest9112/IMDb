@@ -23,9 +23,9 @@ class BottomNavFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        replaceFragment(SearchFragment())
 
         binding?.apply {
+            bottomNavBottomNavigationView.menu.findItem(R.id.search_icon_bnv).isChecked = true
             bottomNavBottomNavigationView.setOnItemSelectedListener {
                 when(it.itemId){
                     R.id.home_icon_bnv -> {
@@ -48,6 +48,7 @@ class BottomNavFragment : Fragment() {
                 true
             }
         }
+        replaceFragment(SearchFragment())
     }
 
     private fun replaceFragment(fragment: Fragment) {
