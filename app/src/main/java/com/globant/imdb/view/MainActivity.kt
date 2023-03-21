@@ -1,10 +1,10 @@
-package com.globant.imdb
+package com.globant.imdb.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupActionBarWithNavController
+import com.globant.imdb.R
 
 class MainActivity : AppCompatActivity() {
 

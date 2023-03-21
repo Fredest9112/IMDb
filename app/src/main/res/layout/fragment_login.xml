@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".LoginFragment">
+    tools:context=".view.login.LoginFragment">
 
     <data>
         <variable
             name="loginFragment"
-            type="com.globant.imdb.LoginFragment" />
+            type="com.globant.imdb.view.login.LoginFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

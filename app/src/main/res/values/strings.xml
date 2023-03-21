@@ -29,7 +29,11 @@
 
     <!--Home Fragment-->
     <string name="home_icon_bnv">Home</string>
-    <string name="search_icon_bnv">Search</string>
     <string name="play_icon_bnv">Play</string>
     <string name="profile_icon_bnv">Profile</string>
+
+    <!--Search Fragment-->
+    <string name="search_icon_bnv">Search</string>
+    <string name="search_query_hint">Search IMDb</string>
+
 </resources>

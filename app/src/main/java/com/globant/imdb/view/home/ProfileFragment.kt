@@ -1,4 +1,4 @@
-package com.globant.imdb.home
+package com.globant.imdb.view.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

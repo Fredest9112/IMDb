@@ -1,4 +1,4 @@
-package com.globant.imdb.home
+package com.globant.imdb.view.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -23,7 +23,7 @@ class BottomNavFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        replaceFragment(HomeFragment())
+        replaceFragment(SearchFragment())
 
         binding?.apply {
             bottomNavBottomNavigationView.setOnItemSelectedListener {
@@ -39,7 +39,6 @@ class BottomNavFragment : Fragment() {
                     R.id.play_icon_bnv -> {
                         replaceFragment(PlayFragment())
                         bottomNavBottomNavigationView.menu.findItem(R.id.play_icon_bnv).isChecked = true
-
                     }
                     R.id.profile_icon_bnv -> {
                         replaceFragment(ProfileFragment())
