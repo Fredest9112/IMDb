@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="movieData"
+            type="com.globant.imdb.data.Movie" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/imdb_white">
+
+
+        <ImageView
+            android:id="@+id/movie_search_image"
+            android:layout_width="90dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="@string/contentdesc_movie_image"
+            app:movieImage="@{movieData.posterPath}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/baseline_movie_filter_24" />
+
+        <TextView
+            android:id="@+id/movie_search_title"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="32dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto"
+            android:maxLines="2"
+            android:text="@{movieData.title}"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/movie_search_image"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/movie_name" />
+
+        <TextView
+            android:id="@+id/movie_search_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/imdb_black"
+            android:textSize="16sp"
+            android:text="@{movieData.releaseDate}"
+            app:layout_constraintStart_toEndOf="@+id/movie_search_image"
+            app:layout_constraintTop_toBottomOf="@+id/movie_search_title"
+            tools:text="@string/movie_year" />
+
+        <TextView
+            android:id="@+id/movie_search_popularity"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:textSize="16sp"
+            app:appendVoteAverage="@{movieData.voteAverage}"
+            app:layout_constraintStart_toEndOf="@+id/movie_search_image"
+            app:layout_constraintTop_toBottomOf="@+id/movie_search_year"
+            tools:text="@string/movie_popularity" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

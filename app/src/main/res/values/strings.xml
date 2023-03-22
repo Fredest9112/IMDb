@@ -36,4 +36,10 @@
     <string name="search_icon_bnv">Search</string>
     <string name="search_query_hint">Search IMDb</string>
 
+    <!--Movie Search Item Layout-->
+    <string name="movie_name">Movie name</string>
+    <string name="movie_year">2023</string>
+    <string name="movie_popularity">Score: %1$s</string>
+    <string name="contentdesc_movie_image">movie poster</string>
+
 </resources>
