@@ -1,6 +1,5 @@
-package com.globant.imdb.data
+package com.globant.imdb.api
 
-import com.globant.imdb.api.IMDbApiService
 import com.globant.imdb.data.Constants.BASE_URL
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

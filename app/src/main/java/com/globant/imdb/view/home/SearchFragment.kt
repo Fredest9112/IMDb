@@ -29,7 +29,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             val topRatedMovies = MoviesRepo().getTopRatedMovies()
-            Log.i("topRatedMovies","$topRatedMovies")
+            Log.i("topRatedMovies", "$topRatedMovies")
         }
     }
 
