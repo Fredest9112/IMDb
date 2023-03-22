@@ -42,6 +42,22 @@ class SearchFragment : Fragment() {
 
         binding?.apply {
             searchResultRecycler.adapter = movieAdapter
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if(!query.isNullOrEmpty()){
+                        lifecycleScope.launch {
+                            Log.i("query","$query")
+                            Log.i("Response","${MoviesRepo().getMoviesByQuery(query)}")
+                        }
+                        return true
+                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(query: String?): Boolean {
+                    return false
+                }
+            })
         }
 
         searchMovieViewModel.topRatedMovies.observe(viewLifecycleOwner) {
