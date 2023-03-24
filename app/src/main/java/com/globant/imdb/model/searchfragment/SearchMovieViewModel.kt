@@ -1,4 +1,4 @@
-package com.globant.imdb.model
+package com.globant.imdb.model.searchfragment
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

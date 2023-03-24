@@ -1,13 +1,13 @@
-package com.globant.imdb.model
+package com.globant.imdb.model.loginfragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.globant.imdb.repo.MoviesRepo
+import com.globant.imdb.repo.LoginRepo
 
 @Suppress("UNCHECKED_CAST")
-class SearchMovieViewModelFactory(private val moviesRepo: MoviesRepo):
+class LoginViewModelFactory(private val loginRepo: LoginRepo):
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return SearchMovieViewModel(moviesRepo) as T
+        return LoginViewModel(loginRepo) as T
     }
 }
