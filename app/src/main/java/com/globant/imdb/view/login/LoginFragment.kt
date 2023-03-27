@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -37,38 +38,61 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.apply {
-            loginFragment = this@LoginFragment
-            googleLogin.setOnClickListener {
-                loginViewModel.signInGoogle(launcher)
-            }
-        }
         loginViewModel.apply {
-            launcher =
-                registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                    initResultHandler(result)
+            binding?.apply {
+                viewModel = loginViewModel
+                lifecycleOwner = viewLifecycleOwner
+            }
+            //SignIn Google
+            binding?.apply {
+                googleLogin.setOnClickListener {
+                    loginViewModel.signInGoogle(launcher)
                 }
-            initLoggingProcess(getString(R.string.default_web_client_id), requireActivity())
-            googleLoginStatus.observe(viewLifecycleOwner) {
+                launcher =
+                    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                        initResultHandler(result)
+                    }
+                initLoggingProcess(getString(R.string.default_web_client_id), requireActivity())
+                googleLoginStatus.observe(viewLifecycleOwner) {
+                    if (it) {
+                        goToBottomNavFragment()
+                    } else {
+                        Toast.makeText(context, "There was a problem signing you in...", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            //SignIn with username/email password
+            binding?.apply {
+                emailTextInput.doOnTextChanged { enteredText, _, _, _ ->
+                    setEmailInput(enteredText.toString())
+                }
+                passwordTextInput.doOnTextChanged { enteredText, _, _, _ ->
+                    setPasswordInput(enteredText.toString())
+                }
+                loginButton.setOnClickListener {
+                    signInWithEmailAndPassword()
+                }
+            }
+            loginStatus.observe(viewLifecycleOwner) {
                 if (it) {
                     goToBottomNavFragment()
                 } else {
-                    Toast.makeText(
-                        context,
-                        "There was a problem signing you in...",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(context, "There was a problem signing you in...", Toast.LENGTH_SHORT).show()
                 }
+            }
+            //SignUp registration
+            binding?.questionRegistration?.setOnClickListener {
+                goToRegisterFragment()
             }
         }
     }
 
-    fun goToRegisterFragment() {
+    private fun goToRegisterFragment() {
         val action = LoginFragmentDirections.actionLoginFragmentToRegistrationFragment()
         findNavController().navigate(action)
     }
 
-    private fun goToBottomNavFragment(){
+    private fun goToBottomNavFragment() {
         val action = LoginFragmentDirections.actionLoginFragmentToBottomNavFragment()
         findNavController().navigate(action)
     }

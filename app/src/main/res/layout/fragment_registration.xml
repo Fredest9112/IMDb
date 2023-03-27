@@ -6,8 +6,8 @@
 
     <data>
         <variable
-            name="registrationFragment"
-            type="com.globant.imdb.view.registration.RegistrationFragment" />
+            name="viewModel"
+            type="com.globant.imdb.model.registrationFragment.RegistrationViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -133,8 +133,8 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="64dp"
             android:backgroundTint="@color/black"
-            android:onClick="@{() -> registrationFragment.goToBottomNavFragment()}"
             android:text="@string/accept_registration_buttone"
+            android:enabled="@{viewModel.areInputsValid}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password_suggestion" />

@@ -8,6 +8,8 @@ import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +20,25 @@ class LoginRepo {
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    fun initFirebaseAuthWithGoogle(defaultWebClientId: String, activity: Activity) {
+    fun initFirebaseInstance(){
         firebaseAuth = FirebaseAuth.getInstance()
+    }
+
+    suspend fun signInEmailAndPass(email: String, password: String): Boolean{
+        return withContext(Dispatchers.IO) {
+            val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+            authResult.user != null
+        }
+    }
+
+    suspend fun signUpEmailAndPass(email: String, password: String): Boolean{
+         return withContext(Dispatchers.IO) {
+            val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            authResult.user != null
+        }
+    }
+
+    fun initAuthenticationWithGoogle(defaultWebClientId: String, activity: Activity) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(defaultWebClientId)
             .requestEmail()

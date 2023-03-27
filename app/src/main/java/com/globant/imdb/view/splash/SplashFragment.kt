@@ -26,8 +26,8 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         firebaseAuth = FirebaseAuth.getInstance()
-        val currentUser = firebaseAuth.currentUser
         lifecycleScope.launch {
+            val currentUser = firebaseAuth.currentUser
             if(currentUser != null){
                 val action = SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
                 findNavController().navigate(action)
