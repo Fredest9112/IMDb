@@ -1,17 +1,16 @@
 package com.globant.imdb.view.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.globant.imdb.data.Constants.BASE_IMAGE_URL
 import com.globant.imdb.data.Movie
 import com.globant.imdb.databinding.MovieSearchItemBinding
+import javax.inject.Inject
 
-class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallBack) {
+class MovieAdapter @Inject constructor() :
+    ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -30,7 +29,7 @@ class MovieAdapter : ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallBa
 
     class MovieViewHolder(private val binding: MovieSearchItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: Movie){
+        fun bind(movie: Movie) {
             binding.movieData = movie
             binding.executePendingBindings()
         }

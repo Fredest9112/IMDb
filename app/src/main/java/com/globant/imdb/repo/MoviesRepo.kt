@@ -6,8 +6,9 @@ import com.globant.imdb.api.IMDbNetworking
 import com.globant.imdb.data.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class MoviesRepo {
+class MoviesRepo @Inject constructor() {
     suspend fun getTopRatedMovies(): List<Movie> {
         var topRatedMovies: List<Movie>? = null
         withContext(Dispatchers.IO) {

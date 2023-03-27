@@ -1,5 +1,6 @@
 package com.globant.imdb.view.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,15 +17,22 @@ import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.model.loginfragment.LoginViewModel
 import com.globant.imdb.model.loginfragment.LoginViewModelFactory
-import com.globant.imdb.repo.LoginRepo
+import com.globant.imdb.view.MyIMDbApp
+import javax.inject.Inject
 
 class LoginFragment : Fragment() {
 
     private var binding: FragmentLoginBinding? = null
     private lateinit var launcher: ActivityResultLauncher<Intent>
-    private val loginViewModelFactory = LoginViewModelFactory(LoginRepo())
+    @Inject
+    lateinit var loginViewModelFactory: LoginViewModelFactory
     private val loginViewModel by lazy {
         ViewModelProvider(this, loginViewModelFactory)[LoginViewModel::class.java]
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireContext().applicationContext as MyIMDbApp).appComponent.injectLoginFragment(this)
     }
 
     override fun onCreateView(

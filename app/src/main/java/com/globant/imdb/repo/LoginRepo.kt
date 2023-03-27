@@ -8,21 +8,20 @@ import androidx.activity.result.ActivityResultLauncher
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class LoginRepo {
-    private lateinit var firebaseAuth: FirebaseAuth
+class LoginRepo @Inject constructor(private val firebaseAuth: FirebaseAuth) {
+    //private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    fun initFirebaseInstance(){
-        firebaseAuth = FirebaseAuth.getInstance()
-    }
+//    fun initFirebaseInstance(){
+//        firebaseAuth = FirebaseAuth.getInstance()
+//    }
 
     suspend fun signInEmailAndPass(email: String, password: String): Boolean{
         return withContext(Dispatchers.IO) {

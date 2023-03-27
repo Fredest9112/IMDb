@@ -22,9 +22,9 @@ class RegistrationViewModel(private val loginRepo: LoginRepo):ViewModel() {
     private var _areInputsValid = MutableLiveData<Boolean>()
     val areInputsValid: LiveData<Boolean> = _areInputsValid
 
-    init {
-        loginRepo.initFirebaseInstance()
-    }
+//    init {
+//        loginRepo.initFirebaseInstance()
+//    }
 
     fun setUsernameInput(username: String) {
         _usernameInput.value = username

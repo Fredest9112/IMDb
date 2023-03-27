@@ -1,5 +1,6 @@
 package com.globant.imdb.view.registration
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +15,14 @@ import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentRegistrationBinding
 import com.globant.imdb.model.registrationFragment.RegistrationViewModel
 import com.globant.imdb.model.registrationFragment.RegistrationViewModelFactory
-import com.globant.imdb.repo.LoginRepo
+import com.globant.imdb.view.MyIMDbApp
+import javax.inject.Inject
 
 class RegistrationFragment : Fragment() {
 
     private var binding: FragmentRegistrationBinding? = null
-    private val registrationViewModelFactory = RegistrationViewModelFactory(LoginRepo())
+    @Inject
+    lateinit var registrationViewModelFactory: RegistrationViewModelFactory
     private val registrationViewModel by lazy {
         ViewModelProvider(this, registrationViewModelFactory)[RegistrationViewModel::class.java]
     }
@@ -31,6 +34,11 @@ class RegistrationFragment : Fragment() {
         val fragmentBinding = FragmentRegistrationBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireContext().applicationContext as MyIMDbApp).appComponent.injectRegistrationFragment(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

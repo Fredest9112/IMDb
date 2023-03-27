@@ -1,5 +1,6 @@
 package com.globant.imdb.view.home
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,17 @@ import androidx.lifecycle.ViewModelProvider
 import com.globant.imdb.databinding.FragmentSearchBinding
 import com.globant.imdb.model.searchfragment.SearchMovieViewModel
 import com.globant.imdb.model.searchfragment.SearchMovieViewModelFactory
-import com.globant.imdb.repo.MoviesRepo
+import com.globant.imdb.view.MyIMDbApp
 import com.globant.imdb.view.adapter.MovieAdapter
+import javax.inject.Inject
 
 class SearchFragment : Fragment() {
 
     private var binding: FragmentSearchBinding? = null
-    private val movieAdapter = MovieAdapter()
-    private val searchMovieViewModelFactory = SearchMovieViewModelFactory(MoviesRepo())
+    @Inject
+    lateinit var movieAdapter: MovieAdapter
+    @Inject
+    lateinit var searchMovieViewModelFactory: SearchMovieViewModelFactory
     private val searchMovieViewModel by lazy {
         ViewModelProvider(this, searchMovieViewModelFactory)[SearchMovieViewModel::class.java]
     }
@@ -30,6 +34,11 @@ class SearchFragment : Fragment() {
         val fragmentBinding = FragmentSearchBinding.inflate(inflater, container, false)
         binding = fragmentBinding
         return fragmentBinding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (requireContext().applicationContext as MyIMDbApp).appComponent.injectSearchFragment(this)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

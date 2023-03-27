@@ -27,9 +27,9 @@ class LoginViewModel(private val loginRepo: LoginRepo) : ViewModel() {
     private var _areInputsValid = MutableLiveData<Boolean>()
     val areInputsValid: LiveData<Boolean> = _areInputsValid
 
-    init {
-        loginRepo.initFirebaseInstance()
-    }
+//    init {
+//        loginRepo.initFirebaseInstance()
+//    }
 
     fun setEmailInput(username: String) {
         _emailInput.value = username
