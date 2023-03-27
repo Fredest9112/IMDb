@@ -14,6 +14,8 @@
     <string name="contentdesc_google_icon">Login with google account</string>
     <string name="question_registration_option">Don\'t you have an account? <b><font color="@color/black"><i>Sign in!</i></font></b></string>
     <string name="guest_option">Continue as guest</string>
+    <string name="login_success_signin">Sign In Successful!</string>
+    <string name="login_error_signin">There was a problem signing you in…</string>
 
     <!--Registration Fragment-->
     <string name="back_arrow">Back arrow</string>
@@ -23,7 +25,9 @@
     <string name="email_input">Email</string>
     <string name="password_input">Password</string>
     <string name="password_suggestion">Password should have at least 8 characters</string>
-    <string name="accept_registration_buttone">Accept</string>
+    <string name="accept_registration_button">Accept</string>
+    <string name="reg_success_signup">Sign Up Successful!</string>
+    <string name="reg_error_signup">There was a problem signing you up…</string>
 
     <!--Home Fragment-->
     <string name="home_icon_bnv">Home</string>

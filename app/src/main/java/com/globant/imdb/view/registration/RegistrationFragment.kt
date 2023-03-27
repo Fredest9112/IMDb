@@ -63,9 +63,10 @@ class RegistrationFragment : Fragment() {
             }
             loginStatus.observe(viewLifecycleOwner) {
                 if (it) {
+                    Toast.makeText(context, getString(R.string.reg_success_signup), Toast.LENGTH_SHORT).show()
                     goToLoginFragment()
                 } else {
-                    Toast.makeText(context, "There was a problem signing you up...", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, getString(R.string.reg_error_signup), Toast.LENGTH_SHORT).show()
                 }
             }
         }
