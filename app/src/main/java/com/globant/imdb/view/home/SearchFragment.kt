@@ -8,8 +8,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.globant.imdb.databinding.FragmentSearchBinding
-import com.globant.imdb.model.SearchMovieViewModel
-import com.globant.imdb.model.SearchMovieViewModelFactory
+import com.globant.imdb.model.searchfragment.SearchMovieViewModel
+import com.globant.imdb.model.searchfragment.SearchMovieViewModelFactory
 import com.globant.imdb.repo.MoviesRepo
 import com.globant.imdb.view.adapter.MovieAdapter
 
@@ -58,7 +58,6 @@ class SearchFragment : Fragment() {
                     }
                 })
             }
-
         }
     }
 
