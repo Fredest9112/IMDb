@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.globant.imdb.model.loginfragment.LoginViewModel" />
+            type="com.globant.imdb.model.loginFragment.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

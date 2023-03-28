@@ -1,4 +1,4 @@
-package com.globant.imdb.model.loginfragment
+package com.globant.imdb.model.loginFragment
 
 import android.app.Activity
 import android.content.Intent

@@ -15,8 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentLoginBinding
-import com.globant.imdb.model.loginfragment.LoginViewModel
-import com.globant.imdb.model.loginfragment.LoginViewModelFactory
+import com.globant.imdb.model.loginFragment.LoginViewModel
+import com.globant.imdb.model.loginFragment.LoginViewModelFactory
 import com.globant.imdb.view.MyIMDbApp
 import javax.inject.Inject
 

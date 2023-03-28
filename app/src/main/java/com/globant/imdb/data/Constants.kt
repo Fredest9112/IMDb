@@ -8,4 +8,5 @@ object Constants {
     const val SEARCH_MOVIE_PATH_1 = "search/movie"
     const val PASSWORD_PATTERN =
         "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{8,}$"
+    const val DATABASE_NAME = "movies_database"
 }

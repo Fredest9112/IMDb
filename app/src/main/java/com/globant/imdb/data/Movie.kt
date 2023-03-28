@@ -1,5 +1,6 @@
 package com.globant.imdb.data
 
+import com.globant.imdb.database.MovieInDB
 import com.google.gson.annotations.SerializedName
 
 data class Movie(
@@ -18,3 +19,14 @@ data class Movie(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val vote_count: Int
 )
+
+fun List<Movie>.asDBModel(): List<MovieInDB> {
+    return map {
+        MovieInDB(
+            posterPath = it.posterPath,
+            title = it.title,
+            releaseDate = it.releaseDate,
+            voteAverage = it.voteAverage
+        )
+    }
+}
