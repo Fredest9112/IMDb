@@ -6,7 +6,7 @@ import com.globant.imdb.repo.LoginRepo
 import javax.inject.Inject
 
 @Suppress("UNCHECKED_CAST")
-class LoginViewModelFactory @Inject constructor(private val loginRepo: LoginRepo):
+class LoginViewModelFactory @Inject constructor(private val loginRepo: LoginRepo) :
     ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return LoginViewModel(loginRepo) as T

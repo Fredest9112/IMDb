@@ -37,10 +37,10 @@ class SplashFragment : Fragment() {
 
         lifecycleScope.launch {
             val currentUser = firebaseAuth.currentUser
-            if(currentUser != null){
+            if (currentUser != null) {
                 val action = SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
                 findNavController().navigate(action)
-            } else{
+            } else {
                 val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
                 findNavController().navigate(action)
             }

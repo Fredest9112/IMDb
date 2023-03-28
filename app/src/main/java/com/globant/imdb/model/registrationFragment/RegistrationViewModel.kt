@@ -8,7 +8,7 @@ import com.globant.imdb.data.Constants
 import com.globant.imdb.repo.LoginRepo
 import kotlinx.coroutines.launch
 
-class RegistrationViewModel(private val loginRepo: LoginRepo):ViewModel() {
+class RegistrationViewModel(private val loginRepo: LoginRepo) : ViewModel() {
 
     private var _loginStatus = MutableLiveData<Boolean>()
     val loginStatus: LiveData<Boolean> = _loginStatus
@@ -22,16 +22,12 @@ class RegistrationViewModel(private val loginRepo: LoginRepo):ViewModel() {
     private var _areInputsValid = MutableLiveData<Boolean>()
     val areInputsValid: LiveData<Boolean> = _areInputsValid
 
-//    init {
-//        loginRepo.initFirebaseInstance()
-//    }
-
     fun setUsernameInput(username: String) {
         _usernameInput.value = username
         _areInputsValid.value = isUsernameValid() && isEmailValid() && isPasswordValid()
     }
 
-    fun setEmailInput(email: String){
+    fun setEmailInput(email: String) {
         _emailInput.value = email
         _areInputsValid.value = isUsernameValid() && isEmailValid() && isPasswordValid()
     }

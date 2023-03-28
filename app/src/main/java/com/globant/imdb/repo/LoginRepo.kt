@@ -16,22 +16,18 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class LoginRepo @Inject constructor(private val firebaseAuth: FirebaseAuth) {
-    //private lateinit var firebaseAuth: FirebaseAuth
+
     private lateinit var googleSignInClient: GoogleSignInClient
 
-//    fun initFirebaseInstance(){
-//        firebaseAuth = FirebaseAuth.getInstance()
-//    }
-
-    suspend fun signInEmailAndPass(email: String, password: String): Boolean{
+    suspend fun signInEmailAndPass(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
             val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             authResult.user != null
         }
     }
 
-    suspend fun signUpEmailAndPass(email: String, password: String): Boolean{
-         return withContext(Dispatchers.IO) {
+    suspend fun signUpEmailAndPass(email: String, password: String): Boolean {
+        return withContext(Dispatchers.IO) {
             val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
             authResult.user != null
         }

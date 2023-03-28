@@ -16,7 +16,7 @@ interface IMDbApiService {
         @Query("api_key") apiKey: String,
         @Query("language") language: String = "en_US",
         @Query("query") query: String,
-        @Query("page") page:String = "1",
+        @Query("page") page: String = "1",
         @Query("include_adult") includeAdult: Boolean = false
-    ):Deferred<TopRatedMovies>
+    ): Deferred<TopRatedMovies>
 }

@@ -18,8 +18,10 @@ import javax.inject.Inject
 class SearchFragment : Fragment() {
 
     private var binding: FragmentSearchBinding? = null
+
     @Inject
     lateinit var movieAdapter: MovieAdapter
+
     @Inject
     lateinit var searchMovieViewModelFactory: SearchMovieViewModelFactory
     private val searchMovieViewModel by lazy {
@@ -56,7 +58,7 @@ class SearchFragment : Fragment() {
                     }
 
                     override fun onQueryTextChange(query: String?): Boolean {
-                        if(!query.isNullOrEmpty()){
+                        if (!query.isNullOrEmpty()) {
                             getMoviesFromQuery(query)
                             moviesFromQuery.observe(viewLifecycleOwner) {
                                 movieAdapter.submitList(it)
