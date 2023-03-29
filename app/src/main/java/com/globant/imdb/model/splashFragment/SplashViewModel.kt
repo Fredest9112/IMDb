@@ -14,6 +14,10 @@ class SplashViewModel(private val databaseRepo: DatabaseRepo): ViewModel() {
         _isDataSaved.value = false
     }
 
+    suspend fun deleteMoviesOnDB(){
+        databaseRepo.deleteAllMovies()
+    }
+
     suspend fun saveTopRatedMoviesToDB() {
         _isDataSaved.value = databaseRepo.insertMoviesOnDB()
     }

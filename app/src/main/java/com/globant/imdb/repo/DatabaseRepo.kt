@@ -14,32 +14,28 @@ import kotlinx.coroutines.withContext
 class DatabaseRepo(private val imDbDataBase: IMDbDataBase) {
 
     suspend fun insertMoviesOnDB(): Boolean {
-        var topRatedMovies: List<Movie>?
-        withContext(Dispatchers.IO) {
-            try {
-                val response = IMDbNetworking.movieData.getTopRatedMoviesAsync(
-                    Constants.API_KEY
-                )
-                topRatedMovies = response.await().results
-                topRatedMovies?.asDBModel()?.forEach {
-                    imDbDataBase.imDbDao.insertMovie(it)
-                }
-                return@withContext true
-            } catch (e: Exception) {
-                Log.e("Error receiving top rated movies", "${e.message}")
-                return@withContext false
+        return runCatching {
+            val response = IMDbNetworking.movieData.getTopRatedMoviesAsync(
+                Constants.API_KEY
+            ).await()
+
+            response.results.asDBModel().forEach {
+                imDbDataBase.imDbDao.insertMovie(it)
             }
+            true
+        }.getOrElse {
+            Log.e("Error receiving top rated movies", "${it.message}")
+            false
         }
-        return false
     }
 
     fun getTopRatedMovies(): Flow<List<MovieInDB>> {
         return imDbDataBase.imDbDao.getTopRatedMovies()
     }
 
-    fun deleteAllMovies(){
-        imDbDataBase.imDbDao.deleteAll()
+    suspend fun deleteAllMovies(){
+        withContext(Dispatchers.IO) {
+            imDbDataBase.imDbDao.deleteAll()
+        }
     }
-
-
 }

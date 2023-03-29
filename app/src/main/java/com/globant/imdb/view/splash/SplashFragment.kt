@@ -48,17 +48,20 @@ class SplashFragment : Fragment() {
         imDbDataBase = IMDbDataBase.getInstance(requireContext().applicationContext)
         splashViewModelFactory = SplashViewModelFactory(DatabaseRepo(imDbDataBase))
 
-        lifecycleScope.launch {
-            splashViewModel.saveTopRatedMoviesToDB()
-            splashViewModel.isDataSaved.observe(viewLifecycleOwner){
-                if(it){
-                    val currentUser = firebaseAuth.currentUser
-                    if (currentUser != null) {
-                        val action = SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
-                        findNavController().navigate(action)
-                    } else {
-                        val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                        findNavController().navigate(action)
+        splashViewModel.apply {
+            lifecycleScope.launch {
+                deleteMoviesOnDB()
+                saveTopRatedMoviesToDB()
+                isDataSaved.observe(viewLifecycleOwner){
+                    if(it){
+                        val currentUser = firebaseAuth.currentUser
+                        if (currentUser != null) {
+                            val action = SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
+                            findNavController().navigate(action)
+                        } else {
+                            val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+                            findNavController().navigate(action)
+                        }
                     }
                 }
             }
