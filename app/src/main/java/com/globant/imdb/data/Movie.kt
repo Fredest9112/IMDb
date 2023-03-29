@@ -20,13 +20,13 @@ data class Movie(
     @SerializedName("vote_count") val vote_count: Int
 )
 
-fun List<Movie>.asDBModel(): List<MovieInDB> {
-    return map {
+fun List<Movie?>.asDBModel(): List<MovieInDB> {
+    return mapNotNull {
         MovieInDB(
-            posterPath = it.posterPath,
-            title = it.title,
-            releaseDate = it.releaseDate,
-            voteAverage = it.voteAverage
+            posterPath = it?.posterPath ?: "",
+            title = it?.title ?: "",
+            releaseDate = it?.releaseDate ?: "",
+            voteAverage = it?.voteAverage ?: 0.0
         )
     }
 }

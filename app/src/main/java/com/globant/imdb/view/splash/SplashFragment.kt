@@ -13,7 +13,6 @@ import com.globant.imdb.R
 import com.globant.imdb.database.IMDbDataBase
 import com.globant.imdb.model.splashFragment.SplashViewModel
 import com.globant.imdb.model.splashFragment.SplashViewModelFactory
-import com.globant.imdb.repo.DatabaseRepo
 import com.globant.imdb.view.MyIMDbApp
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -23,8 +22,8 @@ class SplashFragment : Fragment() {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var imDbDataBase: IMDbDataBase
-    private lateinit var splashViewModelFactory: SplashViewModelFactory
+    @Inject
+    lateinit var splashViewModelFactory: SplashViewModelFactory
     private val splashViewModel by lazy {
         ViewModelProvider(this, splashViewModelFactory)[SplashViewModel::class.java]
     }
@@ -45,8 +44,8 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        imDbDataBase = IMDbDataBase.getInstance(requireContext().applicationContext)
-        splashViewModelFactory = SplashViewModelFactory(DatabaseRepo(imDbDataBase))
+//        imDbDataBase = IMDbDataBase.getInstance(requireContext().applicationContext)
+//        splashViewModelFactory = SplashViewModelFactory(DatabaseRepo(imDbDataBase))
 
         splashViewModel.apply {
             lifecycleScope.launch {

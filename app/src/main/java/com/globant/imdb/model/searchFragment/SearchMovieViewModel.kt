@@ -1,24 +1,23 @@
 package com.globant.imdb.model.searchFragment
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.globant.imdb.data.Movie
+import androidx.lifecycle.*
+import com.globant.imdb.database.MovieInDB
+import com.globant.imdb.repo.DatabaseRepo
 import com.globant.imdb.repo.MoviesRepo
 import kotlinx.coroutines.launch
 
-class SearchMovieViewModel(private val moviesRepo: MoviesRepo) : ViewModel() {
+class SearchMovieViewModel(private val moviesRepo: MoviesRepo, private val databaseRepo: DatabaseRepo) : ViewModel() {
 
-    private var _topRatedMovies = MutableLiveData<List<Movie>>()
-    val topRatedMovies: LiveData<List<Movie>> = _topRatedMovies
+    val topRatedMovies: LiveData<List<MovieInDB>> = getTopRatedMoviesFromDB()
 
-    private var _moviesFromQuery = MutableLiveData<List<Movie>>()
-    val moviesFromQuery: LiveData<List<Movie>> = _moviesFromQuery
+    private var _moviesFromQuery = MutableLiveData<List<MovieInDB>>()
+    val moviesFromQuery: LiveData<List<MovieInDB>> = _moviesFromQuery
 
-    init {
-        viewModelScope.launch {
-            _topRatedMovies.value = moviesRepo.getTopRatedMovies()
+    private fun getTopRatedMoviesFromDB(): LiveData<List<MovieInDB>> {
+        return liveData {
+            databaseRepo.getTopRatedMovies().collect{
+                emit(it)
+            }
         }
     }
 

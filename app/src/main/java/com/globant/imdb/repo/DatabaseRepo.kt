@@ -3,15 +3,15 @@ package com.globant.imdb.repo
 import android.util.Log
 import com.globant.imdb.api.IMDbNetworking
 import com.globant.imdb.data.Constants
-import com.globant.imdb.data.Movie
 import com.globant.imdb.data.asDBModel
 import com.globant.imdb.database.IMDbDataBase
 import com.globant.imdb.database.MovieInDB
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DatabaseRepo(private val imDbDataBase: IMDbDataBase) {
+class DatabaseRepo @Inject constructor(private val imDbDataBase: IMDbDataBase) {
 
     suspend fun insertMoviesOnDB(): Boolean {
         return runCatching {
