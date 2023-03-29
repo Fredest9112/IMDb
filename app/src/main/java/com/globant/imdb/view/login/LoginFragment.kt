@@ -15,8 +15,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentLoginBinding
-import com.globant.imdb.model.loginfragment.LoginViewModel
-import com.globant.imdb.model.loginfragment.LoginViewModelFactory
+import com.globant.imdb.model.loginFragment.LoginViewModel
+import com.globant.imdb.model.loginFragment.LoginViewModelFactory
 import com.globant.imdb.view.MyIMDbApp
 import javax.inject.Inject
 
@@ -63,10 +63,10 @@ class LoginFragment : Fragment() {
                 initLoggingProcess(getString(R.string.default_web_client_id), requireActivity())
                 googleLoginStatus.observe(viewLifecycleOwner) {
                     if (it) {
-                        Toast.makeText(context, "Sign In Successful!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, getString(R.string.login_success_signin), Toast.LENGTH_SHORT).show()
                         goToBottomNavFragment()
                     } else {
-                        Toast.makeText(context, "There was a problem signing you in...", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, getString(R.string.login_error_signin), Toast.LENGTH_SHORT).show()
                     }
                 }
             }

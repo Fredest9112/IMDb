@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
+import com.globant.imdb.database.IMDbDataBase
+import com.globant.imdb.model.splashFragment.SplashViewModel
+import com.globant.imdb.model.splashFragment.SplashViewModelFactory
 import com.globant.imdb.view.MyIMDbApp
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.launch
@@ -18,6 +22,11 @@ class SplashFragment : Fragment() {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
+    @Inject
+    lateinit var splashViewModelFactory: SplashViewModelFactory
+    private val splashViewModel by lazy {
+        ViewModelProvider(this, splashViewModelFactory)[SplashViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +44,22 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            val currentUser = firebaseAuth.currentUser
-            if (currentUser != null) {
-                val action = SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
-                findNavController().navigate(action)
-            } else {
-                val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                findNavController().navigate(action)
+        splashViewModel.apply {
+            lifecycleScope.launch {
+                deleteMoviesOnDB()
+                saveTopRatedMoviesToDB()
+                isDataSaved.observe(viewLifecycleOwner){
+                    if(it){
+                        val currentUser = firebaseAuth.currentUser
+                        if (currentUser != null) {
+                            val action = SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
+                            findNavController().navigate(action)
+                        } else {
+                            val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+                            findNavController().navigate(action)
+                        }
+                    }
+                }
             }
         }
     }

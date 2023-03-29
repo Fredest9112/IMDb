@@ -9,8 +9,8 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.globant.imdb.databinding.FragmentSearchBinding
-import com.globant.imdb.model.searchfragment.SearchMovieViewModel
-import com.globant.imdb.model.searchfragment.SearchMovieViewModelFactory
+import com.globant.imdb.model.searchFragment.SearchMovieViewModel
+import com.globant.imdb.model.searchFragment.SearchMovieViewModelFactory
 import com.globant.imdb.view.MyIMDbApp
 import com.globant.imdb.view.adapter.MovieAdapter
 import javax.inject.Inject

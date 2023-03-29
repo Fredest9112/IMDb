@@ -8,7 +8,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [FirebaseModule::class])
+@Component(modules = [FirebaseModule::class, AppModule::class, DatabaseModule::class])
 interface AppComponent {
     fun injectLoginFragment(fragment: LoginFragment)
     fun injectRegistrationFragment(fragment: RegistrationFragment)

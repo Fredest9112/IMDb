@@ -1,4 +1,4 @@
-package com.globant.imdb.model.loginfragment
+package com.globant.imdb.model.loginFragment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

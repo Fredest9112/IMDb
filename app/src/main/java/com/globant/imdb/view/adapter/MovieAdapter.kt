@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.globant.imdb.data.Movie
+import com.globant.imdb.database.Movie
 import com.globant.imdb.databinding.MovieSearchItemBinding
 import javax.inject.Inject
 
