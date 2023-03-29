@@ -6,7 +6,7 @@
     <data>
         <variable
             name="movieData"
-            type="com.globant.imdb.database.MovieInDB" />
+            type="com.globant.imdb.database.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

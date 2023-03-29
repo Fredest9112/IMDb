@@ -11,10 +11,10 @@ import kotlinx.coroutines.flow.Flow
 interface IMDbDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertMovie(movie: MovieInDB)
+    suspend fun insertMovie(movie: Movie)
 
     @Query("SELECT * FROM $DATABASE_NAME")
-    fun getTopRatedMovies(): Flow<List<MovieInDB>>
+    fun getTopRatedMovies(): Flow<List<Movie>>
 
     @Query("DELETE FROM $DATABASE_NAME")
     fun deleteAll()

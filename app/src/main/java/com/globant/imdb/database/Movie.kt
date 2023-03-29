@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.globant.imdb.data.Constants.DATABASE_NAME
 
 @Entity(tableName = DATABASE_NAME)
-data class MovieInDB(
+data class Movie(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val posterPath: String,

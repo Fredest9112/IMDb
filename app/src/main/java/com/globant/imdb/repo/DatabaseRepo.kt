@@ -5,7 +5,7 @@ import com.globant.imdb.api.IMDbNetworking
 import com.globant.imdb.data.Constants
 import com.globant.imdb.data.asDBModel
 import com.globant.imdb.database.IMDbDataBase
-import com.globant.imdb.database.MovieInDB
+import com.globant.imdb.database.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
@@ -29,7 +29,7 @@ class DatabaseRepo @Inject constructor(private val imDbDataBase: IMDbDataBase) {
         }
     }
 
-    fun getTopRatedMovies(): Flow<List<MovieInDB>> {
+    fun getTopRatedMovies(): Flow<List<Movie>> {
         return imDbDataBase.imDbDao.getTopRatedMovies()
     }
 

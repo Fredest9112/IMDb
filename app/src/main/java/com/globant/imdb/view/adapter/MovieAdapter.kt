@@ -5,12 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.globant.imdb.database.MovieInDB
+import com.globant.imdb.database.Movie
 import com.globant.imdb.databinding.MovieSearchItemBinding
 import javax.inject.Inject
 
 class MovieAdapter @Inject constructor() :
-    ListAdapter<MovieInDB, MovieAdapter.MovieViewHolder>(DiffCallBack) {
+    ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
@@ -29,18 +29,18 @@ class MovieAdapter @Inject constructor() :
 
     class MovieViewHolder(private val binding: MovieSearchItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(movie: MovieInDB) {
+        fun bind(movie: Movie) {
             binding.movieData = movie
             binding.executePendingBindings()
         }
     }
 
-    companion object DiffCallBack : DiffUtil.ItemCallback<MovieInDB>() {
-        override fun areItemsTheSame(oldItem: MovieInDB, newItem: MovieInDB): Boolean {
+    companion object DiffCallBack : DiffUtil.ItemCallback<Movie>() {
+        override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem === newItem
         }
 
-        override fun areContentsTheSame(oldItem: MovieInDB, newItem: MovieInDB): Boolean {
+        override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
             return oldItem.id == newItem.id
         }
     }
