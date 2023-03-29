@@ -44,9 +44,6 @@ class SplashFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        imDbDataBase = IMDbDataBase.getInstance(requireContext().applicationContext)
-//        splashViewModelFactory = SplashViewModelFactory(DatabaseRepo(imDbDataBase))
-
         splashViewModel.apply {
             lifecycleScope.launch {
                 deleteMoviesOnDB()
