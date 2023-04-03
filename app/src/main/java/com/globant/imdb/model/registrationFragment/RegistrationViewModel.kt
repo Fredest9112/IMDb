@@ -6,12 +6,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.data.Constants
 import com.globant.imdb.repo.LoginRepo
+import com.globant.imdb.utils.AuthResult
 import kotlinx.coroutines.launch
 
 class RegistrationViewModel(private val loginRepo: LoginRepo) : ViewModel() {
 
-    private var _loginStatus = MutableLiveData<Boolean>()
-    val loginStatus: LiveData<Boolean> = _loginStatus
+    private var _loginStatus = MutableLiveData<AuthResult>()
+    val loginStatus: LiveData<AuthResult> = _loginStatus
 
     private var _usernameInput = MutableLiveData<String>()
 

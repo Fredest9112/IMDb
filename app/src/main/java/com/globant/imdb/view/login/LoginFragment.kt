@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doOnTextChanged
@@ -17,6 +16,8 @@ import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentLoginBinding
 import com.globant.imdb.model.loginFragment.LoginViewModel
 import com.globant.imdb.model.loginFragment.LoginViewModelFactory
+import com.globant.imdb.utils.AuthResult
+import com.globant.imdb.utils.ToastCreator
 import com.globant.imdb.view.MyIMDbApp
 import javax.inject.Inject
 
@@ -62,11 +63,14 @@ class LoginFragment : Fragment() {
                     }
                 initLoggingProcess(getString(R.string.default_web_client_id), requireActivity())
                 googleLoginStatus.observe(viewLifecycleOwner) {
-                    if (it) {
-                        Toast.makeText(context, getString(R.string.login_success_signin), Toast.LENGTH_SHORT).show()
-                        goToBottomNavFragment()
-                    } else {
-                        Toast.makeText(context, getString(R.string.login_error_signin), Toast.LENGTH_SHORT).show()
+                    when(it){
+                        is AuthResult.Success -> {
+                            ToastCreator.showToastMessage(context,it.message)
+                            goToBottomNavFragment()
+                        }
+                        is AuthResult.Error -> {
+                            ToastCreator.showToastMessage(context,it.message)
+                        }
                     }
                 }
             }
@@ -83,11 +87,12 @@ class LoginFragment : Fragment() {
                 }
             }
             loginStatus.observe(viewLifecycleOwner) {
-                if (it) {
-                    Toast.makeText(context, getString(R.string.login_success_signin), Toast.LENGTH_SHORT).show()
-                    goToBottomNavFragment()
-                } else {
-                    Toast.makeText(context, getString(R.string.login_error_signin), Toast.LENGTH_SHORT).show()
+                when(it){
+                    is AuthResult.Success -> {
+                        ToastCreator.showToastMessage(context,it.message)
+                        goToBottomNavFragment()
+                    }
+                    is AuthResult.Error -> ToastCreator.showToastMessage(context,it.message)
                 }
             }
             //SignUp registration

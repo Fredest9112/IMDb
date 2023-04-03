@@ -10,15 +10,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.globant.imdb.data.Constants.PASSWORD_PATTERN
 import com.globant.imdb.repo.LoginRepo
+import com.globant.imdb.utils.AuthResult
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepo: LoginRepo) : ViewModel() {
 
-    private var _googleLoginStatus = MutableLiveData<Boolean>()
-    val googleLoginStatus: LiveData<Boolean> = _googleLoginStatus
+    private var _googleLoginStatus = MutableLiveData<AuthResult>()
+    val googleLoginStatus: LiveData<AuthResult> = _googleLoginStatus
 
-    private var _loginStatus = MutableLiveData<Boolean>()
-    val loginStatus: LiveData<Boolean> = _loginStatus
+    private var _loginStatus = MutableLiveData<AuthResult>()
+    val loginStatus: LiveData<AuthResult> = _loginStatus
 
     private var _emailInput = MutableLiveData<String>()
 

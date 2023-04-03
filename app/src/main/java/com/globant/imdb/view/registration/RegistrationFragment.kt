@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -15,6 +14,8 @@ import com.globant.imdb.R
 import com.globant.imdb.databinding.FragmentRegistrationBinding
 import com.globant.imdb.model.registrationFragment.RegistrationViewModel
 import com.globant.imdb.model.registrationFragment.RegistrationViewModelFactory
+import com.globant.imdb.utils.AuthResult
+import com.globant.imdb.utils.ToastCreator
 import com.globant.imdb.view.MyIMDbApp
 import javax.inject.Inject
 
@@ -47,6 +48,7 @@ class RegistrationFragment : Fragment() {
             binding?.apply {
                 viewModel = registrationViewModel
                 lifecycleOwner = viewLifecycleOwner
+                backArrow.setOnClickListener { goToLoginFragment() }
                 usernameFrame.typeface = context?.let { ResourcesCompat.getFont(it, R.font.roboto) }
                 usernameInput.typeface = context?.let { ResourcesCompat.getFont(it, R.font.roboto_light_italic) }
                 emailFrame.typeface = context?.let { ResourcesCompat.getFont(it, R.font.roboto) }
@@ -70,11 +72,14 @@ class RegistrationFragment : Fragment() {
                 }
             }
             loginStatus.observe(viewLifecycleOwner) {
-                if (it) {
-                    Toast.makeText(context, getString(R.string.reg_success_signup), Toast.LENGTH_SHORT).show()
-                    goToLoginFragment()
-                } else {
-                    Toast.makeText(context, getString(R.string.reg_error_signup), Toast.LENGTH_SHORT).show()
+                when(it){
+                    is AuthResult.Success -> {
+                        ToastCreator.showToastMessage(context,it.message)
+                        goToLoginFragment()
+                    }
+                    is AuthResult.Error -> {
+                        ToastCreator.showToastMessage(context,it.message)
+                    }
                 }
             }
         }
