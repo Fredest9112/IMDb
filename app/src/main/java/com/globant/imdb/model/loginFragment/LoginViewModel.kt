@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,30 +22,46 @@ class LoginViewModel(private val loginRepo: LoginRepo) : ViewModel() {
     private var _loginStatus = MutableLiveData<AuthResult>()
     val loginStatus: LiveData<AuthResult> = _loginStatus
 
-    private var _emailInput = MutableLiveData<String>()
+    private var _isEmailValid = MutableLiveData<Boolean>()
+    val isEmailValid: LiveData<Boolean> = _isEmailValid
+    private lateinit var emailInput: String
 
-    private var _passwordInput = MutableLiveData<String>()
+    private var _isPasswordValid = MutableLiveData<Boolean>()
+    val isPasswordValid: LiveData<Boolean> = _isPasswordValid
+    private lateinit var passwordInput: String
 
-    private var _areInputsValid = MutableLiveData<Boolean>()
+    private var _areInputsValid = MediatorLiveData<Boolean>()
     val areInputsValid: LiveData<Boolean> = _areInputsValid
 
-    fun setEmailInput(username: String) {
-        _emailInput.value = username
-        _areInputsValid.value = isEmailValid() && isPasswordValid()
+    init {
+        _areInputsValid.addSource(_isEmailValid) { updateInputs() }
+        _areInputsValid.addSource(_isPasswordValid) { updateInputs() }
+
+        _isEmailValid.value = true
+        _isPasswordValid.value = true
+        _areInputsValid.value = false
+    }
+
+    fun setEmailInput(email: String) {
+        _isEmailValid.value = isEmailValid(email)
+        _isEmailValid.value.let { if (it == true) emailInput = email else Unit }
     }
 
     fun setPasswordInput(password: String) {
-        _passwordInput.value = password
-        _areInputsValid.value = isEmailValid() && isPasswordValid()
+        _isPasswordValid.value = isPasswordValid(password)
+        _isEmailValid.value.let { if (it == true) passwordInput = password else Unit }
     }
 
-    private fun isEmailValid(): Boolean {
-        return !_emailInput.value.isNullOrEmpty()
+    private fun updateInputs() {
+        _areInputsValid.value = isEmailValid.value == true && isPasswordValid.value == true
     }
 
-    private fun isPasswordValid(): Boolean {
-        val pattern = PASSWORD_PATTERN.toRegex()
-        return _passwordInput.value?.matches(pattern) ?: false
+    private fun isEmailValid(email: String): Boolean {
+        return email.isNotEmpty() && email.contains("@")
+    }
+
+    private fun isPasswordValid(password: String): Boolean {
+        return password.matches(PASSWORD_PATTERN.toRegex())
     }
 
     fun initLoggingProcess(defaultWebClientId: String, activity: Activity) {
@@ -63,10 +80,7 @@ class LoginViewModel(private val loginRepo: LoginRepo) : ViewModel() {
 
     fun signInWithEmailAndPassword() {
         viewModelScope.launch {
-            _loginStatus.value = loginRepo.signInEmailAndPass(
-                _emailInput.value.toString(),
-                _passwordInput.value.toString()
-            )
+            _loginStatus.value = loginRepo.signInEmailAndPass(emailInput, passwordInput)
         }
     }
 }

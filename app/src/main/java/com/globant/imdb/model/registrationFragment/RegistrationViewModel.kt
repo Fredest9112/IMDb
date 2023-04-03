@@ -1,6 +1,7 @@
 package com.globant.imdb.model.registrationFragment
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,49 +15,67 @@ class RegistrationViewModel(private val loginRepo: LoginRepo) : ViewModel() {
     private var _loginStatus = MutableLiveData<AuthResult>()
     val loginStatus: LiveData<AuthResult> = _loginStatus
 
-    private var _usernameInput = MutableLiveData<String>()
+    private var _isUsernameValid = MutableLiveData<Boolean>()
+    val isUsernameValid: LiveData<Boolean> = _isUsernameValid
+    private lateinit var usernameInput: String
 
-    private var _emailInput = MutableLiveData<String>()
+    private var _isEmailValid = MutableLiveData<Boolean>()
+    val isEmailValid: LiveData<Boolean> = _isEmailValid
+    private lateinit var emailInput: String
 
-    private var _passwordInput = MutableLiveData<String>()
+    private var _isPasswordValid = MutableLiveData<Boolean>()
+    val isPasswordValid: LiveData<Boolean> = _isPasswordValid
+    private lateinit var passwordInput: String
 
-    private var _areInputsValid = MutableLiveData<Boolean>()
+    private var _areInputsValid = MediatorLiveData<Boolean>()
     val areInputsValid: LiveData<Boolean> = _areInputsValid
 
+    init {
+        _areInputsValid.addSource(_isEmailValid) { updateInputs() }
+        _areInputsValid.addSource(_isPasswordValid) { updateInputs() }
+        _areInputsValid.addSource(_isUsernameValid) { updateInputs() }
+
+        _isEmailValid.value = true
+        _isPasswordValid.value = true
+        _isUsernameValid.value = true
+        _areInputsValid.value = false
+    }
+
     fun setUsernameInput(username: String) {
-        _usernameInput.value = username
-        _areInputsValid.value = isUsernameValid() && isEmailValid() && isPasswordValid()
+        _isUsernameValid.value = isUsernameValid(username)
+        _isEmailValid.value.let { if (it == true) usernameInput = username else Unit }
     }
 
     fun setEmailInput(email: String) {
-        _emailInput.value = email
-        _areInputsValid.value = isUsernameValid() && isEmailValid() && isPasswordValid()
+        _isEmailValid.value = isEmailValid(email)
+        _isEmailValid.value.let { if (it == true) emailInput = email else Unit }
     }
 
     fun setPasswordInput(password: String) {
-        _passwordInput.value = password
-        _areInputsValid.value = isUsernameValid() && isEmailValid() && isPasswordValid()
+        _isPasswordValid.value = isPasswordValid(password)
+        _isEmailValid.value.let { if (it == true) passwordInput = password else Unit }
     }
 
-    private fun isUsernameValid(): Boolean {
-        return !_usernameInput.value.isNullOrEmpty()
+    private fun isUsernameValid(username: String): Boolean {
+        return username.isNotEmpty()
     }
 
-    private fun isEmailValid(): Boolean {
-        return _emailInput.value?.contains("@") ?: false
+    private fun isEmailValid(email: String): Boolean {
+        return email.isNotEmpty() && email.contains("@")
     }
 
-    private fun isPasswordValid(): Boolean {
-        val pattern = Constants.PASSWORD_PATTERN.toRegex()
-        return _passwordInput.value?.matches(pattern) ?: false
+    private fun isPasswordValid(password: String): Boolean {
+        return password.matches(Constants.PASSWORD_PATTERN.toRegex())
+    }
+
+    private fun updateInputs() {
+        _areInputsValid.value =
+            isEmailValid.value == true && isPasswordValid.value == true && isUsernameValid.value == true
     }
 
     fun signUpWithEmailAndPassword() {
         viewModelScope.launch {
-            _loginStatus.value = loginRepo.signUpEmailAndPass(
-                _emailInput.value.toString(),
-                _passwordInput.value.toString()
-            )
+            _loginStatus.value = loginRepo.signUpEmailAndPass(emailInput, passwordInput)
         }
     }
 }
