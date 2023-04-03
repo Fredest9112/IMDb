@@ -9,6 +9,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -21,17 +22,29 @@ class LoginRepo @Inject constructor(private val firebaseAuth: FirebaseAuth) {
 
     suspend fun signInEmailAndPass(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-            authResult.user != null
+            try {
+                val authResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+                authResult.user != null
+            } catch (e: FirebaseAuthInvalidUserException) {
+                false
+            } catch (e: Exception) {
+                false
+            }
         }
     }
 
     suspend fun signUpEmailAndPass(email: String, password: String): Boolean {
         return withContext(Dispatchers.IO) {
-            val authResult = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            authResult.user != null
+            try {
+                val authResult =
+                    firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+                authResult.user != null
+            } catch (e: Exception) {
+                false
+            }
         }
     }
+
 
     fun initAuthenticationWithGoogle(defaultWebClientId: String, activity: Activity) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -59,7 +72,7 @@ class LoginRepo @Inject constructor(private val firebaseAuth: FirebaseAuth) {
                     }
                 }
             } else {
-                Log.i("task exception", "${task.exception}")
+                Log.i("google signIn exception", "${task.exception}")
             }
         }
         return false
