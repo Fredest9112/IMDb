@@ -25,6 +25,7 @@ class LoginFragment : Fragment() {
 
     private var binding: FragmentLoginBinding? = null
     private lateinit var launcher: ActivityResultLauncher<Intent>
+
     @Inject
     lateinit var loginViewModelFactory: LoginViewModelFactory
     private val loginViewModel by lazy {
@@ -48,6 +49,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loginViewModel.apply {
+            initSharedPreferences(requireActivity())
             binding?.apply {
                 viewModel = loginViewModel
                 lifecycleOwner = viewLifecycleOwner
@@ -63,13 +65,14 @@ class LoginFragment : Fragment() {
                     }
                 initLoggingProcess(getString(R.string.default_web_client_id), requireActivity())
                 googleLoginStatus.observe(viewLifecycleOwner) {
-                    when(it){
+                    when (it) {
                         is AuthResult.Success -> {
-                            ToastCreator.showToastMessage(context,it.message)
+                            ToastCreator.showToastMessage(context, it.message)
+                            saveLoginPreferences(true)
                             goToBottomNavFragment()
                         }
                         is AuthResult.Error -> {
-                            ToastCreator.showToastMessage(context,it.message)
+                            ToastCreator.showToastMessage(context, it.message)
                         }
                     }
                 }
@@ -87,12 +90,13 @@ class LoginFragment : Fragment() {
                 }
             }
             loginStatus.observe(viewLifecycleOwner) {
-                when(it){
+                when (it) {
                     is AuthResult.Success -> {
-                        ToastCreator.showToastMessage(context,it.message)
+                        ToastCreator.showToastMessage(context, it.message)
+                        saveLoginPreferences(true)
                         goToBottomNavFragment()
                     }
-                    is AuthResult.Error -> ToastCreator.showToastMessage(context,it.message)
+                    is AuthResult.Error -> ToastCreator.showToastMessage(context, it.message)
                 }
             }
             //SignUp registration

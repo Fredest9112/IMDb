@@ -1,7 +1,9 @@
 package com.globant.imdb.model.loginFragment
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.lifecycle.LiveData
@@ -9,6 +11,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.globant.imdb.data.Constants.IS_USER_LOGGED
+import com.globant.imdb.data.Constants.LOGIN_PREFERENCES
 import com.globant.imdb.data.Constants.PASSWORD_PATTERN
 import com.globant.imdb.repo.LoginRepo
 import com.globant.imdb.utils.AuthResult
@@ -32,6 +36,8 @@ class LoginViewModel(private val loginRepo: LoginRepo) : ViewModel() {
 
     private var _areInputsValid = MediatorLiveData<Boolean>()
     val areInputsValid: LiveData<Boolean> = _areInputsValid
+
+    private lateinit var loginPreferences: SharedPreferences
 
     init {
         _areInputsValid.addSource(_isEmailValid) { updateInputs() }
@@ -82,5 +88,15 @@ class LoginViewModel(private val loginRepo: LoginRepo) : ViewModel() {
         viewModelScope.launch {
             _loginStatus.value = loginRepo.signInEmailAndPass(emailInput, passwordInput)
         }
+    }
+
+    fun initSharedPreferences(activity: Activity) {
+        loginPreferences = activity.getSharedPreferences(LOGIN_PREFERENCES, Context.MODE_PRIVATE)
+    }
+
+    fun saveLoginPreferences(isUserLogged: Boolean) {
+        val editor = loginPreferences.edit()
+        editor.putBoolean(IS_USER_LOGGED, isUserLogged)
+        editor.apply()
     }
 }

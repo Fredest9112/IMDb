@@ -10,18 +10,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
-import com.globant.imdb.database.IMDbDataBase
 import com.globant.imdb.model.splashFragment.SplashViewModel
 import com.globant.imdb.model.splashFragment.SplashViewModelFactory
 import com.globant.imdb.view.MyIMDbApp
 import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 class SplashFragment : Fragment() {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
+
     @Inject
     lateinit var splashViewModelFactory: SplashViewModelFactory
     private val splashViewModel by lazy {
@@ -48,14 +48,17 @@ class SplashFragment : Fragment() {
             lifecycleScope.launch {
                 deleteMoviesOnDB()
                 saveTopRatedMoviesToDB()
-                isDataSaved.observe(viewLifecycleOwner){
-                    if(it){
+                isDataSaved.observe(viewLifecycleOwner) {
+                    if (it) {
+                        initSharedPreferences(requireActivity())
                         val currentUser = firebaseAuth.currentUser
-                        if (currentUser != null) {
-                            val action = SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
+                        if (currentUser != null || checkLoginPreferences()) {
+                            val action =
+                                SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
                             findNavController().navigate(action)
                         } else {
-                            val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+                            val action =
+                                SplashFragmentDirections.actionSplashFragmentToLoginFragment()
                             findNavController().navigate(action)
                         }
                     }

@@ -9,4 +9,6 @@ object Constants {
     const val PASSWORD_PATTERN =
         "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{8,}$"
     const val DATABASE_NAME = "movies_database"
+    const val LOGIN_PREFERENCES = "login_preferences"
+    const val IS_USER_LOGGED = "is_user_logged"
 }
