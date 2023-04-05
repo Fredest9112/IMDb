@@ -11,6 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.globant.imdb.databinding.FragmentSearchBinding
 import com.globant.imdb.model.searchFragment.SearchMovieViewModel
 import com.globant.imdb.model.searchFragment.SearchMovieViewModelFactory
+import com.globant.imdb.utils.NetworkResult
+import com.globant.imdb.utils.ToastCreator
 import com.globant.imdb.view.MyIMDbApp
 import com.globant.imdb.view.adapter.MovieAdapter
 import javax.inject.Inject
@@ -61,7 +63,15 @@ class SearchFragment : Fragment() {
                         if (!query.isNullOrEmpty()) {
                             getMoviesFromQuery(query)
                             moviesFromQuery.observe(viewLifecycleOwner) {
-                                movieAdapter.submitList(it)
+                                when (it) {
+                                    is NetworkResult.MoviesSuccess -> {
+                                        movieAdapter.submitList(it.movies)
+                                    }
+                                    is NetworkResult.MoviesError -> {
+                                        movieAdapter.submitList(it.movies)
+                                        ToastCreator.showToastMessage(context, it.message)
+                                    }
+                                }
                             }
                             return true
                         }

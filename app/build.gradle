@@ -74,8 +74,8 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.15.0'
 
     //Firebase auth
-    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
-    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.2.0'
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
 
     //Room
     implementation "androidx.room:room-runtime:2.5.1"
@@ -104,6 +104,11 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     testImplementation 'org.robolectric:robolectric:4.7.3'
     testImplementation 'app.cash.turbine:turbine:0.12.1'
+
+    //Mockito Dependencies
+    testImplementation "org.mockito:mockito-core:4.5.1"
+    testImplementation "org.mockito:mockito-inline:3.12.4"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:4.1.0"
 
     //Local Instrumented test
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'

@@ -1,4 +1,4 @@
-package com.globant.imdb.localDB
+package com.globant.imdb.database
 
 import android.os.Build
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
@@ -9,7 +9,6 @@ import androidx.test.filters.SmallTest
 import app.cash.turbine.test
 import com.globant.imdb.TestDispatcherRule
 import com.globant.imdb.data.MoviesRepoMock
-import com.globant.imdb.database.IMDbDataBase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.CoreMatchers.notNullValue

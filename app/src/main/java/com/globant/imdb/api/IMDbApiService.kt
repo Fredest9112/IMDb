@@ -9,7 +9,7 @@ import retrofit2.http.Query
 
 interface IMDbApiService {
     @GET(INITIAL_SEARCH_SCREEN_PATH)
-    fun getTopRatedMoviesAsync(@Query("api_key") apiKey: String): Deferred<TopRatedMovies>
+    fun getTopRatedMoviesAsync(@Query("api_key") apiKey: String): Deferred<TopRatedMovies>?
 
     @GET(SEARCH_MOVIE_PATH_1)
     fun getMoviesFromQueryAsync(
@@ -18,5 +18,5 @@ interface IMDbApiService {
         @Query("query") query: String,
         @Query("page") page: String = "1",
         @Query("include_adult") includeAdult: Boolean = false
-    ): Deferred<TopRatedMovies>
+    ): Deferred<TopRatedMovies>?
 }

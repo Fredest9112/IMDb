@@ -74,6 +74,7 @@ class LoginFragment : Fragment() {
                         is AuthResult.Error -> {
                             ToastCreator.showToastMessage(context, it.message)
                         }
+                        else -> {}
                     }
                 }
             }

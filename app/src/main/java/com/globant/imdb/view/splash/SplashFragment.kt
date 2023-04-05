@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.globant.imdb.R
 import com.globant.imdb.model.splashFragment.SplashViewModel
 import com.globant.imdb.model.splashFragment.SplashViewModelFactory
+import com.globant.imdb.utils.DatabaseResult
+import com.globant.imdb.utils.ToastCreator
 import com.globant.imdb.view.MyIMDbApp
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
@@ -49,17 +51,24 @@ class SplashFragment : Fragment() {
                 deleteMoviesOnDB()
                 saveTopRatedMoviesToDB()
                 isDataSaved.observe(viewLifecycleOwner) {
-                    if (it) {
-                        initSharedPreferences(requireActivity())
-                        val currentUser = firebaseAuth.currentUser
-                        if (currentUser != null || checkLoginPreferences()) {
-                            val action =
-                                SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
-                            findNavController().navigate(action)
-                        } else {
-                            val action =
-                                SplashFragmentDirections.actionSplashFragmentToLoginFragment()
-                            findNavController().navigate(action)
+                    when(it){
+                        is DatabaseResult.DatabaseSuccess -> {
+                            initSharedPreferences(requireActivity())
+                            val currentUser = firebaseAuth.currentUser
+                            if (currentUser != null || checkLoginPreferences()) {
+                                val action =
+                                    SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
+                                findNavController().navigate(action)
+                            } else {
+                                val action =
+                                    SplashFragmentDirections.actionSplashFragmentToLoginFragment()
+                                findNavController().navigate(action)
+                            }
+                        }
+                        is DatabaseResult.DatabaseError -> {
+                            if(it.message.isNotEmpty()){
+                                ToastCreator.showToastMessage(context, it.message)
+                            }
                         }
                     }
                 }

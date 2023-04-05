@@ -9,16 +9,17 @@ import androidx.lifecycle.ViewModel
 import com.globant.imdb.data.Constants.IS_USER_LOGGED
 import com.globant.imdb.data.Constants.LOGIN_PREFERENCES
 import com.globant.imdb.repo.DatabaseRepo
+import com.globant.imdb.utils.DatabaseResult
 
 class SplashViewModel(private val databaseRepo: DatabaseRepo) : ViewModel() {
 
-    private var _isDataSaved = MutableLiveData<Boolean>()
-    val isDataSaved: LiveData<Boolean> = _isDataSaved
+    private var _isDataSaved = MutableLiveData<DatabaseResult>()
+    val isDataSaved: LiveData<DatabaseResult> = _isDataSaved
 
     private lateinit var loginPreferences: SharedPreferences
 
     init {
-        _isDataSaved.value = false
+        _isDataSaved.value = DatabaseResult.DatabaseError("",false)
     }
 
     suspend fun deleteMoviesOnDB() {
