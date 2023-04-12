@@ -1,4 +1,4 @@
-package com.globant.imdb.view.home
+package com.globant.imdb.view.home.search
 
 import android.content.Context
 import android.os.Bundle

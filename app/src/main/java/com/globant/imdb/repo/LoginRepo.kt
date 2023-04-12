@@ -41,7 +41,8 @@ class LoginRepo @Inject constructor(private val firebaseAuth: FirebaseAuth) {
         return withContext(Dispatchers.IO) {
             try {
                 firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-                AuthResult.Success("Sign In Successful!")
+                firebaseAuth.signOut()
+                AuthResult.Success("Sign Up Successful!")
             } catch (e: FirebaseAuthUserCollisionException) {
                 AuthResult.Error("User already exists")
             } catch (e: Exception) {

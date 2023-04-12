@@ -1,6 +1,6 @@
 package com.globant.imdb.di
 
-import com.globant.imdb.view.home.SearchFragment
+import com.globant.imdb.view.home.search.SearchFragment
 import com.globant.imdb.view.login.LoginFragment
 import com.globant.imdb.view.registration.RegistrationFragment
 import com.globant.imdb.view.splash.SplashFragment

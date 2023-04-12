@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/home_icon_bnv"
+        android:id="@+id/homeFragment"
         android:icon="@drawable/ic_baseline_home_24"
         android:title="@string/home_icon_bnv" />
     <item
-        android:id="@+id/search_icon_bnv"
+        android:id="@+id/searchFragment"
         android:icon="@drawable/ic_baseline_search_24"
         android:title="@string/search_icon_bnv" />
     <item
-        android:id="@+id/play_icon_bnv"
+        android:id="@+id/playFragment"
         android:icon="@drawable/ic_baseline_play_circle_24"
         android:title="@string/play_icon_bnv" />
     <item
-        android:id="@+id/profile_icon_bnv"
+        android:id="@+id/profileFragment"
         android:icon="@drawable/ic_baseline_account_circle_24"
         android:title="@string/profile_icon_bnv" />
 </menu>
