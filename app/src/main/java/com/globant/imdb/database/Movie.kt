@@ -10,6 +10,9 @@ data class Movie(
     val id: Int = 0,
     val posterPath: String,
     val title: String,
+    val originalTitle: String,
+    val overview: String,
     val releaseDate: String,
-    val voteAverage: Double
+    val voteAverage: Double,
+    val popularity: Double,
 )

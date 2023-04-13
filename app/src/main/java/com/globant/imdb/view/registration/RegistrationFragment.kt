@@ -48,7 +48,7 @@ class RegistrationFragment : Fragment() {
             binding?.apply {
                 viewModel = registrationViewModel
                 lifecycleOwner = viewLifecycleOwner
-                backArrow.setOnClickListener { goToLoginFragment() }
+                backToLoginArrow.setOnClickListener { goToLoginFragment() }
                 usernameFrame.typeface = context?.let { ResourcesCompat.getFont(it, R.font.roboto) }
                 usernameInput.typeface = context?.let { ResourcesCompat.getFont(it, R.font.roboto_light_italic) }
                 emailFrame.typeface = context?.let { ResourcesCompat.getFont(it, R.font.roboto) }

@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.globant.imdb.database.Movie
 import com.globant.imdb.databinding.FragmentSearchBinding
 import com.globant.imdb.model.searchFragment.SearchMovieViewModel
 import com.globant.imdb.model.searchFragment.SearchMovieViewModelFactory
@@ -27,7 +29,7 @@ class SearchFragment : Fragment() {
     @Inject
     lateinit var searchMovieViewModelFactory: SearchMovieViewModelFactory
     private val searchMovieViewModel by lazy {
-        ViewModelProvider(this, searchMovieViewModelFactory)[SearchMovieViewModel::class.java]
+        ViewModelProvider(requireActivity(), searchMovieViewModelFactory)[SearchMovieViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -76,6 +78,15 @@ class SearchFragment : Fragment() {
                             return true
                         }
                         return false
+                    }
+                })
+                movieAdapter.setOnItemClickListener(object: MovieAdapter.OnItemClickListener{
+                    override fun onItemClick(movie: Movie?) {
+                        if(movie != null){
+                            getClickedMovie(movie)
+                            val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment()
+                            findNavController().navigate(action)
+                        }
                     }
                 })
             }
