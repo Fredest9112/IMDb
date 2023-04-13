@@ -6,6 +6,7 @@ object Constants {
     const val BASE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
     const val INITIAL_SEARCH_SCREEN_PATH = "movie/top_rated"
     const val SEARCH_MOVIE_PATH = "search/movie"
+    const val MOST_POPULAR_MOVIES = "movie/popular"
     const val PASSWORD_PATTERN =
         "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{8,}$"
     const val DATABASE_NAME = "movies_database"

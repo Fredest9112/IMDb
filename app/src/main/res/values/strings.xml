@@ -55,6 +55,13 @@
     <string name="list_of_episodes_details">Episodes</string>
     <string name="watch_list_button">Add to my watch list</string>
 
+    <!--Home Fragment-->
+    <string name="contentDesc_most_popular_movie">Most popular movie</string>
+    <string name="contentDesc_play_most_popular">Play most popular movie</string>
+    <string name="most_popular_movietitle">Most popular movie title</string>
+    <string name="most_popular_title">Most popular</string>
+    <string name="top_rated_title">Top Rated</string>
+
     <!--Movie Search Item Layout-->
     <string name="movie_name">Movie name</string>
     <string name="movie_year">2023</string>

@@ -47,4 +47,21 @@ class MoviesRepo @Inject constructor() {
             }
         }
     }
+
+    suspend fun getMostPopularMovies(): NetworkResult {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = IMDbNetworking.movieData.getMostPopularMoviesAsync(API_KEY)
+                val topRatedMovieList = response?.await()?.results
+                topRatedMovieList?.asDBModel()?.let { NetworkResult.MoviesSuccess("", it) }
+                    ?: NetworkResult.MoviesError("MoviesRepo: there's no data...")
+            } catch (e: HttpException) {
+                NetworkResult.MoviesError("IMDb HTTP error: there's has been an error when trying to get data ${e.code()} - ${e.message()}")
+            } catch (e: IOException) {
+                NetworkResult.MoviesError("IMDb Network error: there's has been an error when trying to get data ${e.message}")
+            } catch (e: Exception) {
+                NetworkResult.MoviesError("Unknown error receiving data by search: ${e.message}")
+            }
+        }
+    }
 }
