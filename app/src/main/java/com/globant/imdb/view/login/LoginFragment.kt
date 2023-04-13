@@ -113,7 +113,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun goToBottomNavFragment() {
-        val action = LoginFragmentDirections.actionLoginFragmentToBottomNavFragment()
+        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
         findNavController().navigate(action)
     }
 

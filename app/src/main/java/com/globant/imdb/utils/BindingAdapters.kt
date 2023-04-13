@@ -19,10 +19,15 @@ fun bindMovieImageToMovieSearchImageView(imageView: ImageView, url: String?) {
 }
 
 @BindingAdapter("appendVoteAverage")
-fun appendPopularityToTextView(textView: TextView, vote: Double) {
+fun appendVoteAverageToTextView(textView: TextView, vote: Double) {
     val decimalFormat = DecimalFormat("#.#")
     val formattedVote = decimalFormat.format(vote)
     textView.text = textView.context.getString(R.string.movie_popularity, "$formattedVote/10")
+}
+
+@BindingAdapter("appendPopularity")
+fun appendPopularityToTextView(textView: TextView, popularity: Double) {
+    textView.text = popularity.toString()
 }
 
 @BindingAdapter("isPasswordValid")

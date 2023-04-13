@@ -12,13 +12,15 @@ import javax.inject.Inject
 class MovieAdapter @Inject constructor() :
     ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallBack) {
 
+    private lateinit var onItemClickListener: OnItemClickListener
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         return MovieViewHolder(
             MovieSearchItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ), onItemClickListener
         )
     }
 
@@ -27,9 +29,30 @@ class MovieAdapter @Inject constructor() :
         holder.bind(movie)
     }
 
-    class MovieViewHolder(private val binding: MovieSearchItemBinding) :
+    interface OnItemClickListener {
+        fun onItemClick(movie: Movie?)
+    }
+
+    fun setOnItemClickListener(listener: OnItemClickListener){
+        onItemClickListener = listener
+    }
+
+    class MovieViewHolder(
+        private val binding: MovieSearchItemBinding,
+        onItemClickListener: OnItemClickListener
+    ) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private var movieClicked: Movie? = null
+
+        init {
+            binding.root.setOnClickListener {
+                onItemClickListener.onItemClick(movieClicked)
+            }
+        }
+
         fun bind(movie: Movie) {
+            movieClicked = movie
             binding.movieData = movie
             binding.executePendingBindings()
         }

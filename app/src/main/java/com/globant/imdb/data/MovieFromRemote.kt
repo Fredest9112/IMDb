@@ -25,8 +25,11 @@ fun List<MovieFromRemote?>.asDBModel(): List<Movie> {
         Movie(
             posterPath = it?.posterPath ?: "",
             title = it?.title ?: "",
+            originalTitle = it?.originalTitle ?: "",
+            overview = it?.overview ?: "",
             releaseDate = it?.releaseDate ?: "",
-            voteAverage = it?.voteAverage ?: 0.0
+            voteAverage = it?.voteAverage ?: 0.0,
+            popularity = it?.popularity ?: 0.0
         )
     }
 }

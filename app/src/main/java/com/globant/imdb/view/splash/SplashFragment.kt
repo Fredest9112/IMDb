@@ -57,7 +57,7 @@ class SplashFragment : Fragment() {
                             val currentUser = firebaseAuth.currentUser
                             if (currentUser != null || checkLoginPreferences()) {
                                 val action =
-                                    SplashFragmentDirections.actionSplashFragmentToBottomNavFragment()
+                                    SplashFragmentDirections.actionSplashFragmentToHomeFragment()
                                 findNavController().navigate(action)
                             } else {
                                 val action =

@@ -1,6 +1,7 @@
 package com.globant.imdb.di
 
-import com.globant.imdb.view.home.SearchFragment
+import com.globant.imdb.view.home.search.DetailsFragment
+import com.globant.imdb.view.home.search.SearchFragment
 import com.globant.imdb.view.login.LoginFragment
 import com.globant.imdb.view.registration.RegistrationFragment
 import com.globant.imdb.view.splash.SplashFragment
@@ -14,4 +15,5 @@ interface AppComponent {
     fun injectRegistrationFragment(fragment: RegistrationFragment)
     fun injectSearchFragment(fragment: SearchFragment)
     fun injectSplashFragment(fragment: SplashFragment)
+    fun injectDetailsFragment(fragment: DetailsFragment)
 }

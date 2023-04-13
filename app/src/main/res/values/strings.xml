@@ -38,6 +38,23 @@
     <string name="search_icon_bnv">Search</string>
     <string name="search_query_hint">Search IMDb</string>
 
+    <!--Details Fragment-->
+    <string name="movie_title_details">Movie Title</string>
+    <string name="contentdesc_back_arrow_details">Back to search movies</string>
+    <string name="contentdesc_play_movie_details">Play Movie</string>
+    <string name="contentdesc_movie_placeholder_details">Movie placeholder</string>
+    <string name="contentdesc_rating">Rating</string>
+    <string name="contentdesc_movieimage_details">Movie Poster</string>
+    <string name="contentdesc_forwardarrow_details">Check Episodes</string>
+    <string name="movie_bigtitle_details">Movie Big Title</string>
+    <string name="movie_original_title">Original title</string>
+    <string name="movie_popularity_details">120.000</string>
+    <string name="movie_voteavg_details">5.0</string>
+    <string name="movie_overview_details">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+    <string name="episode_details">Episode guide</string>
+    <string name="list_of_episodes_details">Episodes</string>
+    <string name="watch_list_button">Add to my watch list</string>
+
     <!--Movie Search Item Layout-->
     <string name="movie_name">Movie name</string>
     <string name="movie_year">2023</string>
