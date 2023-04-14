@@ -3,6 +3,15 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="movieData"
+            type="com.globant.imdb.database.Movie" />
+        <variable
+            name="viewModel"
+            type="com.globant.imdb.model.homeFragment.HomeViewModel" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -26,6 +35,7 @@
                     android:layout_height="200dp"
                     android:contentDescription="@string/contentDesc_most_popular_movie"
                     android:src="@drawable/baseline_movie_filter_24"
+                    app:movieImage="@{viewModel.theMostPopularMovie.posterPath}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -50,20 +60,24 @@
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="100dp"
                 android:contentDescription="@string/contentDesc_most_popular_movie"
+                app:movieImage="@{viewModel.theMostPopularMovie.posterPath}"
                 android:src="@drawable/baseline_movie_filter_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/most_popular_movietitle"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="180dp"
                 android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/roboto"
+                android:text="@{viewModel.theMostPopularMovie.title}"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/most_popular_movie_layout"
                 tools:text="@string/most_popular_movietitle" />
@@ -99,7 +113,7 @@
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                tools:text="@string/most_popular_title"
+                android:text="@string/most_popular_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider2" />
@@ -147,7 +161,7 @@
                 android:layout_marginStart="48dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                tools:text="@string/top_rated_title"
+                android:text="@string/top_rated_title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider6" />

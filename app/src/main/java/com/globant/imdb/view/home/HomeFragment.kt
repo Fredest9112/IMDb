@@ -13,11 +13,18 @@ import com.globant.imdb.model.homeFragment.HomeViewModelFactory
 import com.globant.imdb.utils.NetworkResult
 import com.globant.imdb.utils.ToastCreator
 import com.globant.imdb.view.MyIMDbApp
+import com.globant.imdb.view.adapter.MostPopularMovieAdapter
 import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
     private var binding: FragmentHomeBinding? = null
+
+    @Inject
+    lateinit var mostPopularMovieAdapter: MostPopularMovieAdapter
+
+    @Inject
+    lateinit var topRatedMovieAdapter: MostPopularMovieAdapter
 
     @Inject
     lateinit var homeViewModelFactory: HomeViewModelFactory
@@ -43,13 +50,23 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding?.apply {
-            homeViewModel.mostPopularMovies.observe(viewLifecycleOwner){
-                when (it){
-                    is NetworkResult.MoviesSuccess -> {
-
-                    }
-                    is NetworkResult.MoviesError -> {
-                        ToastCreator.showToastMessage(context, it.message)
+            viewModel = homeViewModel
+            lifecycleOwner = viewLifecycleOwner
+            mostPopularRv.adapter = mostPopularMovieAdapter
+            topRatedRv.adapter = topRatedMovieAdapter
+            homeViewModel.apply {
+                topRatedMovies.observe(viewLifecycleOwner) {
+                    topRatedMovieAdapter.submitList(it)
+                }
+                homeViewModel.allPopularMovies.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is NetworkResult.MoviesSuccess -> {
+                            setMostPopularMovie(it.movies)
+                            mostPopularMovieAdapter.submitList(getRestOfPopularMovies(it.movies))
+                        }
+                        is NetworkResult.MoviesError -> {
+                            ToastCreator.showToastMessage(context, it.message)
+                        }
                     }
                 }
             }

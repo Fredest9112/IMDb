@@ -25,6 +25,13 @@ fun appendVoteAverageToTextView(textView: TextView, vote: Double) {
     textView.text = textView.context.getString(R.string.movie_popularity, "$formattedVote/10")
 }
 
+@BindingAdapter("appendOnlyVoteAvgValue")
+fun appendOnlyVoteAvgValueToTextView(textView: TextView, vote: Double) {
+    val decimalFormat = DecimalFormat("#.#")
+    val formattedVote = decimalFormat.format(vote)
+    textView.text = formattedVote
+}
+
 @BindingAdapter("appendPopularity")
 fun appendPopularityToTextView(textView: TextView, popularity: Double) {
     textView.text = popularity.toString()

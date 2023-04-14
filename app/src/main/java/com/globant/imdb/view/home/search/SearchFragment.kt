@@ -16,7 +16,7 @@ import com.globant.imdb.model.searchFragment.SearchMovieViewModelFactory
 import com.globant.imdb.utils.NetworkResult
 import com.globant.imdb.utils.ToastCreator
 import com.globant.imdb.view.MyIMDbApp
-import com.globant.imdb.view.adapter.MovieAdapter
+import com.globant.imdb.view.adapter.SearchMovieAdapter
 import javax.inject.Inject
 
 class SearchFragment : Fragment() {
@@ -24,7 +24,7 @@ class SearchFragment : Fragment() {
     private var binding: FragmentSearchBinding? = null
 
     @Inject
-    lateinit var movieAdapter: MovieAdapter
+    lateinit var searchMovieAdapter: SearchMovieAdapter
 
     @Inject
     lateinit var searchMovieViewModelFactory: SearchMovieViewModelFactory
@@ -53,9 +53,9 @@ class SearchFragment : Fragment() {
         binding?.apply {
             searchMovieViewModel.apply {
                 topRatedMovies.observe(viewLifecycleOwner) {
-                    movieAdapter.submitList(it)
+                    searchMovieAdapter.submitList(it)
                 }
-                searchResultRecycler.adapter = movieAdapter
+                searchResultRecycler.adapter = searchMovieAdapter
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
                         return false
@@ -67,10 +67,10 @@ class SearchFragment : Fragment() {
                             moviesFromQuery.observe(viewLifecycleOwner) {
                                 when (it) {
                                     is NetworkResult.MoviesSuccess -> {
-                                        movieAdapter.submitList(it.movies)
+                                        searchMovieAdapter.submitList(it.movies)
                                     }
                                     is NetworkResult.MoviesError -> {
-                                        movieAdapter.submitList(it.movies)
+                                        searchMovieAdapter.submitList(it.movies)
                                         ToastCreator.showToastMessage(context, it.message)
                                     }
                                 }
@@ -80,7 +80,7 @@ class SearchFragment : Fragment() {
                         return false
                     }
                 })
-                movieAdapter.setOnItemClickListener(object: MovieAdapter.OnItemClickListener{
+                searchMovieAdapter.setOnItemClickListener(object: SearchMovieAdapter.OnItemClickListener{
                     override fun onItemClick(movie: Movie?) {
                         if(movie != null){
                             getClickedMovie(movie)

@@ -68,4 +68,8 @@
     <string name="movie_popularity">Score: %1$s</string>
     <string name="contentdesc_movie_image">movie poster</string>
 
+    <!--Most popular movie item Layout-->
+    <string name="most_popular_movie_name">Movie name</string>
+    <string name="most_popular_movie_voteavg">0.0</string>
+
 </resources>
