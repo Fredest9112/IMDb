@@ -9,13 +9,13 @@ import com.globant.imdb.database.Movie
 import com.globant.imdb.databinding.MovieSearchItemBinding
 import javax.inject.Inject
 
-class MovieAdapter @Inject constructor() :
-    ListAdapter<Movie, MovieAdapter.MovieViewHolder>(DiffCallBack) {
+class SearchMovieAdapter @Inject constructor() :
+    ListAdapter<Movie, SearchMovieAdapter.SearchMovieViewHolder>(DiffCallBack) {
 
     private lateinit var onItemClickListener: OnItemClickListener
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        return MovieViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchMovieViewHolder {
+        return SearchMovieViewHolder(
             MovieSearchItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -24,7 +24,7 @@ class MovieAdapter @Inject constructor() :
         )
     }
 
-    override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SearchMovieViewHolder, position: Int) {
         val movie = getItem(position)
         holder.bind(movie)
     }
@@ -37,7 +37,7 @@ class MovieAdapter @Inject constructor() :
         onItemClickListener = listener
     }
 
-    class MovieViewHolder(
+    class SearchMovieViewHolder(
         private val binding: MovieSearchItemBinding,
         onItemClickListener: OnItemClickListener
     ) :

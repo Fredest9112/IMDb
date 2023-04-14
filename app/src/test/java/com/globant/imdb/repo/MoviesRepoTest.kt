@@ -3,7 +3,7 @@ package com.globant.imdb.repo
 import com.globant.imdb.api.IMDbApiService
 import com.globant.imdb.data.Constants.API_KEY
 import com.globant.imdb.data.MovieFromRemote
-import com.globant.imdb.data.TopRatedMovies
+import com.globant.imdb.data.MoviesFromIMDbService
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -58,7 +58,7 @@ class MoviesRepoTest {
                 vote_count = 0
             )
         )
-        val topRatedMovies = TopRatedMovies(
+        val topRatedMovies = MoviesFromIMDbService(
             page = 1, results = movieFromRemote, totalPages = 1, totalResults = 1
         )
         `when`(
