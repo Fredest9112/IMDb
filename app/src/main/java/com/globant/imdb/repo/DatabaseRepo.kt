@@ -1,5 +1,6 @@
 package com.globant.imdb.repo
 
+import com.globant.imdb.database.FavoriteMovie
 import com.globant.imdb.database.IMDbDataBase
 import com.globant.imdb.database.Movie
 import com.globant.imdb.utils.DatabaseResult
@@ -31,7 +32,7 @@ class DatabaseRepo @Inject constructor(
                 }
             }
         } catch (e: Exception) {
-            DatabaseResult.DatabaseError("Error inserting data on database: $e")
+            DatabaseResult.DatabaseError("Error inserting movies on database: $e")
         }
     }
 
@@ -39,9 +40,38 @@ class DatabaseRepo @Inject constructor(
         return imDbDataBase.imDbDao.getTopRatedMovies()
     }
 
-    suspend fun deleteAllMovies() {
-        withContext(Dispatchers.IO) {
-            imDbDataBase.imDbDao.deleteAll()
+    suspend fun deleteAllMovies(): DatabaseResult {
+        return try{
+            withContext(Dispatchers.IO) {
+                imDbDataBase.imDbDao.deleteAll()
+            }
+            DatabaseResult.DatabaseSuccess("")
+        } catch (e: Exception) {
+            DatabaseResult.DatabaseError("Error deleting movies on database: $e")
+        }
+    }
+
+    suspend fun insertFavoriteMoviesOnDB(favoriteMovie: FavoriteMovie): DatabaseResult {
+        return try {
+            imDbDataBase.imDbDao.insertFavoriteMovie(favoriteMovie)
+            DatabaseResult.DatabaseSuccess("")
+        } catch (e: Exception) {
+            DatabaseResult.DatabaseError("Error inserting movies on database: $e")
+        }
+    }
+
+    fun getFavoriteMovies(): Flow<List<FavoriteMovie>> {
+        return imDbDataBase.imDbDao.getFavoriteMovies()
+    }
+
+    suspend fun deleteAllFavoriteMovies(): DatabaseResult {
+        return try {
+            withContext(Dispatchers.IO) {
+                imDbDataBase.imDbDao.deleteFavoriteMovies()
+                DatabaseResult.DatabaseSuccess("")
+            }
+        } catch (e: Exception) {
+            DatabaseResult.DatabaseError("Error deleting favorite movies on database: $e")
         }
     }
 }

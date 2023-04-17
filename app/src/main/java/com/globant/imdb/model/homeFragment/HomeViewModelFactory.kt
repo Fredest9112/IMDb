@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.globant.imdb.repo.DatabaseRepo
 import com.globant.imdb.repo.MoviesRepo
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @Suppress("UNCHECKED_CAST")
 class HomeViewModelFactory @Inject constructor(private val moviesRepo: MoviesRepo, private val databaseRepo: DatabaseRepo) :
     ViewModelProvider.NewInstanceFactory() {
