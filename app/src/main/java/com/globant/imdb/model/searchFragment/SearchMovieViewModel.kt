@@ -18,8 +18,14 @@ class SearchMovieViewModel(private val moviesRepo: MoviesRepo, private val datab
     private var _moviesFromQuery = MutableLiveData<NetworkResult>()
     val moviesFromQuery: LiveData<NetworkResult> = _moviesFromQuery
 
+    private var _recommendedMovies = MutableLiveData<NetworkResult>()
+    val recommendedMovies: LiveData<NetworkResult> = _recommendedMovies
+
     private var _clickedMovie = MutableLiveData<Movie>()
     val clickedMovie: LiveData<Movie> = _clickedMovie
+
+    private var _clickedMovieId = MutableLiveData<Int>()
+    val clickedMovieId: LiveData<Int> = _clickedMovieId
 
     private fun getTopRatedMoviesFromDB(): LiveData<List<Movie>> {
         return liveData {
@@ -37,5 +43,12 @@ class SearchMovieViewModel(private val moviesRepo: MoviesRepo, private val datab
 
     fun getClickedMovie(movie: Movie){
         _clickedMovie.value = movie
+        _clickedMovieId.value = movie.id
+    }
+
+    fun getRecommendedMoviesFromId(id: Int) {
+        viewModelScope.launch {
+            _recommendedMovies.value = moviesRepo.getRecommendedMovies(id)
+        }
     }
 }

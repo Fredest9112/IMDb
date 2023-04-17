@@ -1,5 +1,6 @@
 package com.globant.imdb.repo
 
+import android.util.Log
 import com.globant.imdb.api.IMDbNetworking
 import com.globant.imdb.data.Constants.API_KEY
 import com.globant.imdb.data.asDBModel
@@ -57,6 +58,23 @@ class MoviesRepo @Inject constructor() {
                     ?: NetworkResult.MoviesError("MoviesRepo: there's no data...")
             } catch (e: HttpException) {
                 NetworkResult.MoviesError("IMDb HTTP error: there's has been an error when trying to get data ${e.code()} - ${e.message()}")
+            } catch (e: IOException) {
+                NetworkResult.MoviesError("IMDb Network error: there's has been an error when trying to get data ${e.message}")
+            } catch (e: Exception) {
+                NetworkResult.MoviesError("Unknown error receiving data by search: ${e.message}")
+            }
+        }
+    }
+
+    suspend fun getRecommendedMovies(id: Int): NetworkResult {
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = IMDbNetworking.movieData.getRecommendedMoviesAsync(id, API_KEY)
+                val topRatedMovieList = response?.await()?.results
+                topRatedMovieList?.asDBModel()?.let { NetworkResult.MoviesSuccess("", it) }
+                    ?: NetworkResult.MoviesError("MoviesRepo: there's no data...")
+            } catch (e: HttpException) {
+                NetworkResult.MoviesError("IMDb HTTP error: there's has been an error when trying to get data ${Log.i("error","${e.code()}")} - ${Log.i("message", e.message())}")
             } catch (e: IOException) {
                 NetworkResult.MoviesError("IMDb Network error: there's has been an error when trying to get data ${e.message}")
             } catch (e: Exception) {

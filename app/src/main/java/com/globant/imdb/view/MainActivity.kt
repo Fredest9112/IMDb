@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         backCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 when (navController.currentDestination?.id) {
-                    R.id.homeFragment, R.id.splashFragment, R.id.loginFragment, R.id.registrationFragment -> {
+                    R.id.homeFragment, R.id.splashFragment, R.id.loginFragment, R.id.registrationFragment, R.id.detailsFragment -> {
                         isEnabled = false
                         onBackPressedDispatcher.onBackPressed()
                         isEnabled = true

@@ -6,6 +6,7 @@ import com.globant.imdb.data.Constants.SEARCH_MOVIE_PATH
 import com.globant.imdb.data.MoviesFromIMDbService
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface IMDbApiService {
@@ -23,4 +24,10 @@ interface IMDbApiService {
 
     @GET(MOST_POPULAR_MOVIES)
     fun getMostPopularMoviesAsync(@Query("api_key") apiKey: String): Deferred<MoviesFromIMDbService>?
+
+    @GET("movie/{movie_id}/recommendations")
+    fun getRecommendedMoviesAsync(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") apiKey: String
+    ): Deferred<MoviesFromIMDbService>?
 }

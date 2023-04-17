@@ -2,7 +2,6 @@ package com.globant.imdb.view.home.search
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,10 @@ import androidx.navigation.fragment.findNavController
 import com.globant.imdb.databinding.FragmentDetailsBinding
 import com.globant.imdb.model.searchFragment.SearchMovieViewModel
 import com.globant.imdb.model.searchFragment.SearchMovieViewModelFactory
+import com.globant.imdb.utils.NetworkResult
+import com.globant.imdb.utils.ToastCreator
 import com.globant.imdb.view.MyIMDbApp
+import com.globant.imdb.view.adapter.MostPopularMovieAdapter
 import javax.inject.Inject
 
 class DetailsFragment : Fragment() {
@@ -21,6 +23,9 @@ class DetailsFragment : Fragment() {
 
     @Inject
     lateinit var searchMovieViewModelFactory: SearchMovieViewModelFactory
+
+    @Inject
+    lateinit var recommendedMovieAdapter: MostPopularMovieAdapter
     private val searchMovieViewModel by lazy {
         ViewModelProvider(requireActivity(), searchMovieViewModelFactory)[SearchMovieViewModel::class.java]
     }
@@ -45,6 +50,22 @@ class DetailsFragment : Fragment() {
         binding?.apply {
             lifecycleOwner = viewLifecycleOwner
             movieData = searchMovieViewModel
+            recommendedMoviesRv.adapter = recommendedMovieAdapter
+            searchMovieViewModel.apply {
+                clickedMovieId.observe(viewLifecycleOwner){
+                    getRecommendedMoviesFromId(it)
+                }
+                recommendedMovies.observe(viewLifecycleOwner){
+                    when(it){
+                        is NetworkResult.MoviesSuccess -> {
+                            recommendedMovieAdapter.submitList(it.movies)
+                        }
+                        is NetworkResult.MoviesError -> {
+                            ToastCreator.showToastMessage(context, it.message)
+                        }
+                    }
+                }
+            }
             backToSearchMovies.setOnClickListener {
                 val action = DetailsFragmentDirections.actionDetailsFragmentToSearchFragment()
                 findNavController().navigate(action)
