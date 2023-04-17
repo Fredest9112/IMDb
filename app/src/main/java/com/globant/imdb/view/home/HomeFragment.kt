@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
                 topRatedMovies.observe(viewLifecycleOwner) {
                     topRatedMovieAdapter.submitList(it)
                 }
-                homeViewModel.allPopularMovies.observe(viewLifecycleOwner) {
+                allPopularMovies.observe(viewLifecycleOwner) {
                     when (it) {
                         is NetworkResult.MoviesSuccess -> {
                             setMostPopularMovie(it.movies)
