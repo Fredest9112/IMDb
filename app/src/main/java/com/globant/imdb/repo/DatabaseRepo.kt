@@ -1,8 +1,9 @@
 package com.globant.imdb.repo
 
-import com.globant.imdb.database.FavoriteMovie
+import com.globant.imdb.database.RecentWatchedMovie
 import com.globant.imdb.database.IMDbDataBase
 import com.globant.imdb.database.Movie
+import com.globant.imdb.database.WatchListMovie
 import com.globant.imdb.utils.DatabaseResult
 import com.globant.imdb.utils.NetworkResult
 import javax.inject.Inject
@@ -51,27 +52,51 @@ class DatabaseRepo @Inject constructor(
         }
     }
 
-    suspend fun insertFavoriteMoviesOnDB(favoriteMovie: FavoriteMovie): DatabaseResult {
+    suspend fun insertRecentWatchedMoviesOnDB(recentWatchedMovie: RecentWatchedMovie): DatabaseResult {
         return try {
-            imDbDataBase.imDbDao.insertFavoriteMovie(favoriteMovie)
+            imDbDataBase.imDbDao.insertRecentWatchedMovie(recentWatchedMovie)
             DatabaseResult.DatabaseSuccess("")
         } catch (e: Exception) {
-            DatabaseResult.DatabaseError("Error inserting movies on database: $e")
+            DatabaseResult.DatabaseError("Error inserting favorite movies on database: $e")
         }
     }
 
-    fun getFavoriteMovies(): Flow<List<FavoriteMovie>> {
-        return imDbDataBase.imDbDao.getFavoriteMovies()
+    fun getRecentWatchedMovies(): Flow<List<RecentWatchedMovie>> {
+        return imDbDataBase.imDbDao.getRecentWatchedMovies()
     }
 
-    suspend fun deleteAllFavoriteMovies(): DatabaseResult {
+    suspend fun deleteAllRecentWatchedMovies(): DatabaseResult {
         return try {
             withContext(Dispatchers.IO) {
-                imDbDataBase.imDbDao.deleteFavoriteMovies()
+                imDbDataBase.imDbDao.deleteRecentWatchedMovies()
                 DatabaseResult.DatabaseSuccess("")
             }
         } catch (e: Exception) {
             DatabaseResult.DatabaseError("Error deleting favorite movies on database: $e")
+        }
+    }
+
+    suspend fun insertWatchListMoviesOnDB(watchListMovie: WatchListMovie): DatabaseResult {
+        return try {
+            imDbDataBase.imDbDao.insertWatchListMovie(watchListMovie)
+            DatabaseResult.DatabaseSuccess("")
+        } catch (e: Exception) {
+            DatabaseResult.DatabaseError("Error inserting watch list movies on database: $e")
+        }
+    }
+
+    fun getWatchListMovies(): Flow<List<WatchListMovie>> {
+        return imDbDataBase.imDbDao.getWatchListMovies()
+    }
+
+    suspend fun deleteAllWatchListMovies(): DatabaseResult {
+        return try {
+            withContext(Dispatchers.IO) {
+                imDbDataBase.imDbDao.deleteWatchListMovies()
+                DatabaseResult.DatabaseSuccess("")
+            }
+        } catch (e: Exception) {
+            DatabaseResult.DatabaseError("Error deleting watch list movies on database: $e")
         }
     }
 }

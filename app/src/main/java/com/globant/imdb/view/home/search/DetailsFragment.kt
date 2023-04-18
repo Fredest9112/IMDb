@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.globant.imdb.database.asWatchListMovie
 import com.globant.imdb.databinding.FragmentDetailsBinding
 import com.globant.imdb.model.searchFragment.SearchMovieViewModel
 import com.globant.imdb.model.searchFragment.SearchMovieViewModelFactory
@@ -62,6 +63,16 @@ class DetailsFragment : Fragment() {
                         }
                         is NetworkResult.MoviesError -> {
                             ToastCreator.showToastMessage(context, it.message)
+                        }
+                    }
+                }
+                watchListButton.setOnClickListener {
+                    clickedMovie.observe(viewLifecycleOwner) {
+                        if(it != null){
+                            addMovieToWatchList(it.asWatchListMovie())
+                            ToastCreator.showToastMessage(context, "Movie Added to WatchList successfully")
+                        } else {
+                            ToastCreator.showToastMessage(context, "Error adding movie to WatchList")
                         }
                     }
                 }

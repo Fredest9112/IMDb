@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.globant.imdb.database.asDBMovie
 import com.globant.imdb.databinding.FragmentProfileBinding
 import com.globant.imdb.model.profileFragment.ProfileViewModel
 import com.globant.imdb.model.profileFragment.ProfileViewModelFactory
 import com.globant.imdb.view.MyIMDbApp
+import com.globant.imdb.view.adapter.MostPopularMovieAdapter
+import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
 
 class ProfileFragment : Fragment() {
@@ -19,6 +22,16 @@ class ProfileFragment : Fragment() {
 
     @Inject
     lateinit var profileViewModelFactory: ProfileViewModelFactory
+
+    @Inject
+    lateinit var recentWatchListMovieAdapter: MostPopularMovieAdapter
+
+    @Inject
+    lateinit var watchListMovieAdapter: MostPopularMovieAdapter
+
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
+
     private val profileViewModel by lazy {
         ViewModelProvider(this, profileViewModelFactory)[ProfileViewModel::class.java]
     }
@@ -40,11 +53,40 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val currentUser = firebaseAuth.currentUser
         binding?.apply {
+            recentWatchRv.adapter = recentWatchListMovieAdapter
+            watchListRv.adapter = watchListMovieAdapter
             profileViewModel.apply {
-                favoriteMovies.observe(viewLifecycleOwner){
-                    testText.text = it.toString()
+                recentWatchedMovies.observe(viewLifecycleOwner){
+                    when {
+                        !it.isNullOrEmpty() -> {
+                            recentwatchDesc.visibility = View.GONE
+                            recentWatchRv.visibility = View.VISIBLE
+                            recentWatchListMovieAdapter.submitList(it.asDBMovie())
+                        }
+                        else -> {
+                            recentwatchDesc.visibility = View.VISIBLE
+                            recentWatchRv.visibility = View.INVISIBLE
+                        }
+                    }
                 }
+                watchListMovies.observe(viewLifecycleOwner){
+                    when {
+                        !it.isNullOrEmpty() -> {
+                            watchlistDesc.visibility = View.GONE
+                            watchListRv.visibility = View.VISIBLE
+                            watchListMovieAdapter.submitList(it.asDBMovie())
+                        }
+                        else -> {
+                            watchlistDesc.visibility = View.VISIBLE
+                            watchListRv.visibility = View.INVISIBLE
+                        }
+                    }
+                }
+            }
+            if(currentUser != null){
+                profileUsername.text = currentUser.email
             }
         }
     }

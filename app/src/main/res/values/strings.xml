@@ -63,6 +63,15 @@
     <string name="most_popular_title">Most popular</string>
     <string name="top_rated_title">Top Rated</string>
 
+    <!--Profile Fragment-->
+    <string name="user_name_title">Username</string>
+    <string name="contentDest_username_pic">Username picture</string>
+    <string name="watchlist_title">Watch list</string>
+    <string name="watchlist_description">Create a watch list so you don\'t miss any movie or tv series!</string>
+    <string name="create_watchlist_button">start watch list</string>
+    <string name="recent_watch_title">Recently watched</string>
+    <string name="recent_watch_description">You haven\'t visit any page recently</string>
+
     <!--Movie Search Item Layout-->
     <string name="movie_name">Movie name</string>
     <string name="movie_year">2023</string>

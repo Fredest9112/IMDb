@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.globant.imdb.data.Constants.DATABASE_NAME
 
-@Database(entities = [Movie::class, FavoriteMovie::class], version = 1, exportSchema = false)
+@Database(entities = [Movie::class, RecentWatchedMovie::class, WatchListMovie::class], version = 1, exportSchema = false)
 abstract class IMDbDataBase : RoomDatabase() {
     abstract val imDbDao: IMDbDao
 

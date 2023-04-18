@@ -241,8 +241,8 @@
                 android:layout_marginTop="16dp"
                 android:backgroundTint="@color/imdb_yellow"
                 android:fontFamily="@font/roboto_bold"
-                android:text="@string/watch_list_button"
                 android:textColor="@color/black"
+                android:text="@string/watch_list_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divider4" />

@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
-import com.globant.imdb.database.FavoriteMovie
+import com.globant.imdb.database.RecentWatchedMovie
 import com.globant.imdb.database.Movie
+import com.globant.imdb.database.WatchListMovie
 import com.globant.imdb.database.asFavoriteMovie
 import com.globant.imdb.repo.DatabaseRepo
 import com.globant.imdb.repo.MoviesRepo
@@ -55,9 +56,15 @@ class SearchMovieViewModel(private val moviesRepo: MoviesRepo, private val datab
         }
     }
 
-    private fun addFavoriteMovieToDB(favoriteMovie: FavoriteMovie){
+    private fun addFavoriteMovieToDB(favoriteMovie: RecentWatchedMovie){
         viewModelScope.launch {
-            databaseRepo.insertFavoriteMoviesOnDB(favoriteMovie)
+            databaseRepo.insertRecentWatchedMoviesOnDB(favoriteMovie)
+        }
+    }
+
+    fun addMovieToWatchList(watchListMovie: WatchListMovie){
+        viewModelScope.launch {
+            databaseRepo.insertWatchListMoviesOnDB(watchListMovie)
         }
     }
 }

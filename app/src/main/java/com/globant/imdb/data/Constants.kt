@@ -11,7 +11,8 @@ object Constants {
         "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@\$!%*#?&])[A-Za-z\\d@\$!%*#?&]{8,}$"
     const val DATABASE_NAME = "movies_database"
     const val MOVIES_TABLE = "movies"
-    const val FAV_MOVIES_TABLE = "favorite_movies"
+    const val RECENT_WATCHED_MOVIES_TABLE = "recent_movies"
+    const val WATCHLIST_MOVIES_TABLE = "watchlist_movies"
     const val LOGIN_PREFERENCES = "login_preferences"
     const val IS_USER_LOGGED = "is_user_logged"
 }

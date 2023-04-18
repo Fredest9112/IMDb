@@ -23,6 +23,7 @@ data class MovieFromRemote(
 fun List<MovieFromRemote?>.asDBModel(): List<Movie> {
     return mapNotNull {
         Movie(
+            id = it?.id ?: 0,
             posterPath = it?.posterPath ?: "",
             title = it?.title ?: "",
             originalTitle = it?.originalTitle ?: "",

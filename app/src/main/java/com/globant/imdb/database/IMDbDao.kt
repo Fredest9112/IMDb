@@ -4,8 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.globant.imdb.data.Constants.FAV_MOVIES_TABLE
+import com.globant.imdb.data.Constants.RECENT_WATCHED_MOVIES_TABLE
 import com.globant.imdb.data.Constants.MOVIES_TABLE
+import com.globant.imdb.data.Constants.WATCHLIST_MOVIES_TABLE
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -21,11 +22,20 @@ interface IMDbDao {
     fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFavoriteMovie(favoriteMovie: FavoriteMovie)
+    suspend fun insertRecentWatchedMovie(recentWatchedMovie: RecentWatchedMovie)
 
-    @Query("SELECT * FROM $FAV_MOVIES_TABLE")
-    fun getFavoriteMovies(): Flow<List<FavoriteMovie>>
+    @Query("SELECT * FROM $RECENT_WATCHED_MOVIES_TABLE")
+    fun getRecentWatchedMovies(): Flow<List<RecentWatchedMovie>>
 
-    @Query("DELETE FROM $FAV_MOVIES_TABLE")
-    fun deleteFavoriteMovies()
+    @Query("DELETE FROM $RECENT_WATCHED_MOVIES_TABLE")
+    fun deleteRecentWatchedMovies()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertWatchListMovie(watchListMovie: WatchListMovie)
+
+    @Query("SELECT * FROM $WATCHLIST_MOVIES_TABLE")
+    fun getWatchListMovies(): Flow<List<WatchListMovie>>
+
+    @Query("DELETE FROM $WATCHLIST_MOVIES_TABLE")
+    fun deleteWatchListMovies()
 }
