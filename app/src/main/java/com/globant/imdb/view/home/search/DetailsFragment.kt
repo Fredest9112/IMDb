@@ -76,10 +76,9 @@ class DetailsFragment : Fragment() {
                         }
                     }
                 }
-            }
-            backToSearchMovies.setOnClickListener {
-                val action = DetailsFragmentDirections.actionDetailsFragmentToSearchFragment()
-                findNavController().navigate(action)
+                backToSearchMovies.setOnClickListener {
+                    findNavController().popBackStack()
+                }
             }
         }
     }

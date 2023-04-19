@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isEmpty
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -29,7 +30,10 @@ class SearchFragment : Fragment() {
     @Inject
     lateinit var searchMovieViewModelFactory: SearchMovieViewModelFactory
     private val searchMovieViewModel by lazy {
-        ViewModelProvider(requireActivity(), searchMovieViewModelFactory)[SearchMovieViewModel::class.java]
+        ViewModelProvider(
+            requireActivity(),
+            searchMovieViewModelFactory
+        )[SearchMovieViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -52,9 +56,6 @@ class SearchFragment : Fragment() {
 
         binding?.apply {
             searchMovieViewModel.apply {
-                topRatedMovies.observe(viewLifecycleOwner) {
-                    searchMovieAdapter.submitList(it)
-                }
                 searchResultRecycler.adapter = searchMovieAdapter
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -76,15 +77,23 @@ class SearchFragment : Fragment() {
                                 }
                             }
                             return true
+                        } else {
+                            return false
                         }
-                        return false
                     }
                 })
-                searchMovieAdapter.setOnItemClickListener(object: SearchMovieAdapter.OnItemClickListener{
+                topRatedMovies.observe(viewLifecycleOwner) {
+                    if(!moviesFromQuery.hasObservers() || searchResultRecycler.isEmpty()){
+                        searchMovieAdapter.submitList(it)
+                    }
+                }
+                searchMovieAdapter.setOnItemClickListener(object :
+                    SearchMovieAdapter.OnItemClickListener {
                     override fun onItemClick(movie: Movie?) {
-                        if(movie != null){
+                        if (movie != null) {
                             getClickedMovie(movie)
-                            val action = SearchFragmentDirections.actionSearchFragmentToDetailsFragment()
+                            val action =
+                                SearchFragmentDirections.actionSearchFragmentToDetailsFragment()
                             findNavController().navigate(action)
                         }
                     }
@@ -96,5 +105,6 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+        searchMovieViewModel.moviesFromQuery.removeObservers(viewLifecycleOwner)
     }
 }
