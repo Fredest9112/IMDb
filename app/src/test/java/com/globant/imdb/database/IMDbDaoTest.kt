@@ -84,6 +84,55 @@ class IMDbDaoTest {
         }
     }
 
+    @Test
+    fun insertRecentWatchedMoviesAndCompareThemWithRepo() = runTest {
+        //Given a repository with top rated movies
+        MoviesRepoMock.recentWatchedMovies.forEach { imDbDataBase.imDbDao.insertRecentWatchedMovie(it) }
+        //When top rated movies are retrieved from db
+        val loadedMovies = imDbDataBase.imDbDao.getRecentWatchedMovies()
+        //Then assert the db movies match the repository with top rated movies
+        loadedMovies.test {
+            val movieList = awaitItem()
+            assertThat(movieList, notNullValue())
+            assertEquals(LIST_OF_MOVIES, movieList.size)
+            assertEquals(MoviesRepoMock.recentWatchedMovies, movieList)
+            cancel()
+        }
+    }
+
+    @Test
+    fun deleteRecentWatchedMoviesFromDB() = runTest {
+        //Given a repository with top rated movies
+        MoviesRepoMock.recentWatchedMovies.forEach { imDbDataBase.imDbDao.insertRecentWatchedMovie(it) }
+        //When top rated movies are retrieved from db
+        imDbDataBase.imDbDao.getRecentWatchedMovies()
+        //Then assert the db movies where deleted from the db
+        imDbDataBase.imDbDao.deleteRecentWatchedMovies()
+        val loadedMovies = imDbDataBase.imDbDao.getRecentWatchedMovies()
+        loadedMovies.test {
+            val movieList = awaitItem()
+            assertThat(movieList, notNullValue())
+            assertEquals(0, movieList.size)
+            cancel()
+        }
+    }
+
+    @Test
+    fun insertWatchListMoviesAndCompareThemWithRepo() = runTest {
+        //Given a repository with top rated movies
+        MoviesRepoMock.watchListMovies.forEach { imDbDataBase.imDbDao.insertWatchListMovie(it) }
+        //When top rated movies are retrieved from db
+        val loadedMovies = imDbDataBase.imDbDao.getWatchListMovies()
+        //Then assert the db movies match the repository with top rated movies
+        loadedMovies.test {
+            val movieList = awaitItem()
+            assertThat(movieList, notNullValue())
+            assertEquals(LIST_OF_MOVIES, movieList.size)
+            assertEquals(MoviesRepoMock.watchListMovies, movieList)
+            cancel()
+        }
+    }
+
     companion object {
         const val LIST_OF_MOVIES = 8
     }

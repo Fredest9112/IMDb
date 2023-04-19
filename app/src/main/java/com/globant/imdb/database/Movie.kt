@@ -17,7 +17,7 @@ data class Movie(
     val popularity: Double,
 )
 
-fun Movie?.asFavoriteMovie(): RecentWatchedMovie {
+fun Movie?.asRecentWatchedMovie(): RecentWatchedMovie {
     return RecentWatchedMovie(
         id = this?.id ?: 0,
         posterPath = this?.posterPath ?: "",

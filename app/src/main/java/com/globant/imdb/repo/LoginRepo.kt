@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 
 class LoginRepo @Inject constructor(private val firebaseAuth: FirebaseAuth) {
 
-    private lateinit var googleSignInClient: GoogleSignInClient
+    lateinit var googleSignInClient: GoogleSignInClient
 
     suspend fun signInEmailAndPass(email: String, password: String): AuthResult {
         return withContext(Dispatchers.IO) {
